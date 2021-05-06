@@ -21,24 +21,61 @@ library(dplyr)
 library(htmltools)
 library(econR)
 .GlobalEnv$web <- econR::Web()
-web$foldername="docs2" # output folder name
-web$html_filename <- "index.html"
+web$foldername="docs" # output folder name
+web$html_filename <- "carousel.html"
 
 ```
 
-### Widgets
+
+### carousel
+
+```{r carousel, drake=F}
+ tags$div(class="carousel", 
+    tags$a(class="carousel-item", href="#one!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_a.png")),
+    tags$a(class="carousel-item", href="#two!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_b.png")),
+    tags$a(class="carousel-item", href="#three!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_c.png")),
+    tags$a(class="carousel-item", href="#four!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_d.png")),
+    tags$a(class="carousel-item", href="#five!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_e.png"))
+  )
   
-```{r makecondition_widgets}
-library(plotly)
 ```
 
+```{r carousel}
+ tags$div(class="carousel", 
+    tags$a(class="carousel-item", href="#one!", 
+           card1
+           ),
+    tags$a(class="carousel-item", href="#two!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_b.png")),
+    tags$a(class="carousel-item", href="#three!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_c.png")),
+    tags$a(class="carousel-item", href="#four!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_d.png")),
+    tags$a(class="carousel-item", href="#five!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_e.png"))
+  )
+  
+```
 
-```{r plt_widget}
-plt_widget <- subplot(
-  plot_ly(mpg, x = ~cty, y = ~hwy, name = "default"),
-  plot_ly(mpg, x = ~cty, y = ~hwy) %>% 
-    add_markers(alpha = 0.2, name = "alpha")
-)
+#### card 1
+
+```{r card1}
+card1 <- tags$div(class="card", 
+        tags$div(class="card-image", 
+          tags$img(src="https://materializecss.github.io/materialize/images/sample-1.jpg"),
+          tags$span(class="card-title"," Card Title")
+        ),
+        tags$div(class="card-content", 
+          tags$p( "I am a very simple card. I am good at containing small bits of information.
+          I am convenient because I require little markup to use effectively.")
+        )
+      )
+```
+
+```{r}
+htmltools::browsable(card1)
+```
+
+### greenbtn
+
+```{r greenbtn}
+htmltools::tagList()
 ```
 
 
@@ -47,15 +84,14 @@ plt_widget <- subplot(
 ```{r bodyTags}
 bodyTags <- {
   htmltools::tagList(
-    tags$main(
-      tags$h5(class="center-align",
-      "Materialise with Plotly")
-    ),
     tags$div(class="container",
-             tags$div(class="row",
-                      tags$div(class="col s12",
-                               plt_widget)
-                      ))
+             tags$div(
+               class="row", carousel
+             ),
+             tags$div(
+               class="row", greenbtn
+             )
+             )
   )
 }
 ```
@@ -155,3 +191,9 @@ web$browse()
 
 
 
+
+
+## JS
+
+
+<!--JS end-->
