@@ -1,41 +1,59 @@
 ---
-drake_cache: ".usr_video"
+drake_cache: ".lifeInfo"
 ---
 
-## Materialise Framework
-
-  * <https://materializecss.com/>
-
-## Setup environment
-
-  * Addins: Initiate drake -> `drake$source_plan()` -> `drake$makePlan()`.
-  
-  * `web$browse()` to see the output. 
-  
-  * If any change to Rmd, save the Rmd, then `drake$update()` -> `web$browser()` to see the change.
-  
-  * Your html output file is in `web$output_filepath()`.
+## SASS
 
 ```{r makecondition}
-library(dplyr)
-library(htmltools)
-library(econR)
-.GlobalEnv$web <- econR::Web()
-web$foldername="docs2" # output folder name
-web$html_filename <- "index.html"
+library(sass)
+my_sass <- sass(
+  sass_file("sass_demo.scss"))
+```
+
+
+```{r tag_sass}
+tag_sass <- tags$style(
+  my_sass
+)
+```
+
+## buses
+
+```{r buses} 
+tagList(
+  tags$div(
+  class="valign-wrapper",
+  tags$i(class="material-icons","directions_bus"), "916"
+),
+tags$div(
+  class="valign-wrapper less5mins",
+  tags$a(class="btn-floating pulse red",
+       tags$i(class="material-icons","directions_bus")),
+ "916"),
+tags$div(
+  class="valign-wrapper between5and10",
+  tags$i(class="material-icons","directions_bus"), "916"
+),
+tags$div(
+  class="valign-wrapper more10mins",
+  tags$i(class="material-icons","directions_bus"), "916"
+)
+)
+
 
 ```
 
-## Body elements
 
-### Body tag list
+### Body Tags
 
-```{r bodyTagList}
-bodyTagList <- {
+```{r bodyTags}
+bodyTags <- {
   htmltools::tagList(
-    tags$div(class="video-container",
-    tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/z7GFa9Idi-M", title="YouTube video player", frameborder="0", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen="")
-    )
+    tags$div(class="container",
+             tags$div(class="row",
+                      buses
+                      )),
+    tag_sass
   )
 }
 ```
@@ -53,7 +71,7 @@ html_placeholder <- tags$html(
     )
   ),
   tags$body(
-    bodyTagList #do.call(htmltools::tagList, bodyTags)
+    do.call(htmltools::tagList, bodyTags)
   )
 )
 ```
@@ -135,9 +153,3 @@ web$browse()
 
 
 
-
-
-## JS
-
-
-<!--JS end-->

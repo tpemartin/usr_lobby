@@ -1,5 +1,5 @@
 ---
-drake_cache: ".usr_video"
+drake_cache: ".myHtml"
 ---
 
 ## Materialise Framework
@@ -28,14 +28,53 @@ web$html_filename <- "index.html"
 
 ## Body elements
 
+### Widgets
+
+  * Widgets can be designed in a separate file and saved in a Rdata for loading here.
+  
+  * While loading, make sure `envir = .GlobalEnv`.
+  
+  * Label widget loading chunk `makecondition_xxx`. 
+  
+```{r makecondition_widgets}
+library(plotly)
+```
+
+
+```{r plt_widget}
+plt_widget <- subplot(
+  plot_ly(mpg, x = ~cty, y = ~hwy, name = "default"),
+  plot_ly(mpg, x = ~cty, y = ~hwy) %>% 
+    add_markers(alpha = 0.2, name = "alpha")
+)
+```
+
+
+```{r el_widget}
+el_widget <- tags$div(class="container",
+             tags$div(class="row",
+                      tags$div(class="col s12",
+                               plt_widget)
+                      ))
+```
+
+### main
+
+
+```{r main}
+main <- tags$main(
+      tags$h5(class="center-align",
+      "Materialise with Plotly")
+    )
+```
+
 ### Body tag list
 
 ```{r bodyTagList}
 bodyTagList <- {
   htmltools::tagList(
-    tags$div(class="video-container",
-    tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/z7GFa9Idi-M", title="YouTube video player", frameborder="0", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen="")
-    )
+    main,
+    el_widget
   )
 }
 ```
@@ -135,9 +174,3 @@ web$browse()
 
 
 
-
-
-## JS
-
-
-<!--JS end-->

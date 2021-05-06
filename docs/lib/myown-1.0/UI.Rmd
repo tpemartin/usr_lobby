@@ -1,10 +1,10 @@
 ---
-drake_cache: ".usr_video"
+drake_cache: ".myHtml"
 ---
 
 ## Materialise Framework
 
-  * <https://materializecss.com/>
+  * <https://materializecss.github.io/materialize/>
 
 ## Setup environment
 
@@ -12,7 +12,7 @@ drake_cache: ".usr_video"
   
   * `web$browse()` to see the output. 
   
-  * If any change to Rmd, save the Rmd, then `drake$update()` -> `web$browser()` to see the change.
+  * If any change to Rmd or js/ and css/ folder, then `web$update()` -> `web$browse()` to see the change.
   
   * Your html output file is in `web$output_filepath()`.
 
@@ -26,16 +26,36 @@ web$html_filename <- "index.html"
 
 ```
 
-## Body elements
+### Widgets
+  
+```{r makecondition_widgets}
+library(plotly)
+```
 
-### Body tag list
 
-```{r bodyTagList}
-bodyTagList <- {
+```{r plt_widget}
+plt_widget <- subplot(
+  plot_ly(mpg, x = ~cty, y = ~hwy, name = "default"),
+  plot_ly(mpg, x = ~cty, y = ~hwy) %>% 
+    add_markers(alpha = 0.2, name = "alpha")
+)
+```
+
+
+### Body Tags
+
+```{r bodyTags}
+bodyTags <- {
   htmltools::tagList(
-    tags$div(class="video-container",
-    tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/z7GFa9Idi-M", title="YouTube video player", frameborder="0", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen="")
-    )
+    tags$main(
+      tags$h5(class="center-align",
+      "Materialise with Plotly")
+    ),
+    tags$div(class="container",
+             tags$div(class="row",
+                      tags$div(class="col s12",
+                               plt_widget)
+                      ))
   )
 }
 ```
@@ -53,7 +73,7 @@ html_placeholder <- tags$html(
     )
   ),
   tags$body(
-    bodyTagList #do.call(htmltools::tagList, bodyTags)
+    do.call(htmltools::tagList, bodyTags)
   )
 )
 ```
@@ -135,9 +155,3 @@ web$browse()
 
 
 
-
-
-## JS
-
-
-<!--JS end-->
