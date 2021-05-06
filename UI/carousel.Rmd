@@ -45,7 +45,8 @@ web$html_filename <- "carousel.html"
     tags$a(class="carousel-item", href="#one!", 
            card1
            ),
-    tags$a(class="carousel-item", href="#two!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_b.png")),
+    tags$a(class="carousel-item", href="#two!", 
+           poster_toy),
     tags$a(class="carousel-item", href="#three!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_c.png")),
     tags$a(class="carousel-item", href="#four!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_d.png")),
     tags$a(class="carousel-item", href="#five!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_e.png"))
@@ -72,10 +73,71 @@ card1 <- tags$div(class="card",
 htmltools::browsable(card1)
 ```
 
+##### poster
+
+https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg
+
+```{r poster_toy, drake=T}
+tags$div(
+  tags$img(
+    class="responsive-img",
+  src="https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg"
+  )
+)
+
+```
+
+```{r poster_toy, drake=F}
+poster_toy <- tags$div(
+  style="background-image: url('https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg');
+  width: 200px;
+  height: 100%;"
+)
+```
+
+```{r}
+htmltools::browsable(poster_toy)
+```
+
+#### label
+
+```{r label_activity}
+label_activity <- tags$div("活動")
+```
+
+```{r}
+htmltools::browsable(label_activity)
+```
+
+
+
 ### greenbtn
 
 ```{r greenbtn}
 htmltools::tagList()
+```
+
+#### control_panel
+
+```{r control_panel}
+
+```
+
+### floating btn
+
+```{r floatingBtn}
+floatingBtn <- tags$div(class="fixed-action-btn", 
+  tags$a(class="btn-floating btn-large red", 
+    tags$i(class="large material-icons"," mode_edit")
+  ),
+  tags$ul( 
+    tags$li( tags$a(class="btn-floating red", tags$i(class="material-icons"," insert_chart"))),
+    tags$li( tags$a(class="btn-floating yellow darken-1", tags$i(class="material-icons"," format_quote"))),
+    tags$li( tags$a(class="btn-floating green", tags$i(class="material-icons"," publish"))),
+    tags$li( tags$a(class="btn-floating blue", tags$i(class="material-icons"," attach_file")))
+  )
+)
+      
 ```
 
 
@@ -86,11 +148,14 @@ bodyTags <- {
   htmltools::tagList(
     tags$div(class="container",
              tags$div(
-               class="row", carousel
-             ),
-             tags$div(
-               class="row", greenbtn
-             )
+               class="row", 
+               carousel,
+               floatingBtn
+             )#,
+             #floatingBtn
+             # tags$div(
+             #   class="row", greenbtn
+             # )
              )
   )
 }
