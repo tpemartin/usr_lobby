@@ -40,7 +40,7 @@ web$html_filename <- "carousel.html"
   
 ```
 
-```{r carousel}
+```{r carousel, drake=F}
  tags$div(class="carousel",
     tags$a(class="carousel-item", href="#one!", 
            card1
@@ -57,10 +57,104 @@ web$html_filename <- "carousel.html"
   
 ```
 
+```{r}
+imglink <- "https://www.dropbox.com/s/vlhvqdw4w0b0oq4/KDFRc36.jpg?dl=0"
+validlink <- stringr::str_replace(imglink,
+                     "www.dropbox.com",
+                     "dl.dropboxusercontent.com")
+```
+
+```{r carousel}
+ tags$div(class="carousel",
+          tagList(
+            generate_carousel_item(
+              href="#one!", 
+              cardHolder(
+                img_src="https://dl.dropboxusercontent.com/s/vlhvqdw4w0b0oq4/KDFRc36.jpg?dl=0")
+            ),
+            generate_carousel_item(
+              href="#two!", 
+              poster_toy
+            ),
+            generate_carousel_item(
+              href="#three!",
+              tags$img(
+                class="responsive-img",
+                src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg"
+              )
+            )
+          )
+)
+  
+```
+
+```{r}
+generate_carousel_item(href="#toycard", card4)
+```
+
+
+```{r pack_carousel_items}
+pack_carousel_items <- function(...){
+  list_args <- list(...)
+  do.call(
+    htmltools::tagList, list(...)
+  )
+}
+```
+
+```{r generate_carousel_item}
+generate_carousel_item <- function(href, ...){
+  tags$a(class="carousel-item", href=href,
+     htmltools::tagList(
+       ...
+     ))
+}
+
+```
+
+#### card4
+
+
+```{r card4, drake=F}
+card4 <- {
+  tags$div(class="card", 
+  tags$div(class="card-image", 
+    tags$img(src="https://i.imgur.com/KDFRc36.jpg"),
+    tags$span(class="card-title","  Card Title"),
+    # tags$a(class="btn-floating halfway-fab  waves-effect waves-light red",
+      tags$a(
+        class="halfway-fab",
+        tags$i(class="material-icons","  add")
+      )
+#    )
+  ),
+  tags$div(class="card-content", 
+    tags$p("  I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.")
+  )
+)
+}
+```
+
+```{r cardHolder}
+cardHolder <- function(img_src){
+  tags$div(class="card", 
+        tags$div(class="card-image", 
+          tags$img(src=img_src)#,
+          # tags$span(class="card-title"," Card Title"),
+          # tags$a(class="btn-floating halfway-fab waves-effect waves-light red", tags$i(class="material-icons"," add"))
+        )#,
+        # tags$div(class="card-content", 
+        #   tags$p(class="card-title", "Card Title"),
+        #   tags$p(" I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.")
+        # )
+        )
+}
+```
+
 #### card 1
 
 ```{r card1}
-card1 <- tags$div(class="card", 
+card1 <- tags$div(class="card large", 
         tags$div(class="card-image", 
           tags$img(src="https://materializecss.github.io/materialize/images/sample-1.jpg"),
           tags$span(class="card-title"," Card Title")
@@ -134,6 +228,33 @@ floatingBtn <- tags$div(class="fixed-action-btn",
   )
 )
       
+```
+
+### Card holder
+<div class="card large">
+        <div class="card-image">
+          <img src="https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        </div>
+        </div>
+            
+```{r cardHolder, drake=F}
+cardHolder <- function(){
+  tags$div(class="card large", 
+        tags$div(class="card-image", 
+          tags$img(src="https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg"),
+          tags$span(class="card-title"," Card Title"),
+          tags$a(class="btn-floating halfway-fab waves-effect waves-light red", tags$i(class="material-icons"," add"))
+        ),
+        tags$div(class="card-content", 
+          tags$p(" I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.")
+        )
+        )
+}
 ```
 
 
