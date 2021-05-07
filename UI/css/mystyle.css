@@ -13,3 +13,12 @@ body {
 .more10mins {
   color: green;
 }
+
+.carousel {
+min-height: 600px;
+}
+
+.carousel .carousel-item{
+width: 400px;
+height: 100%;
+}

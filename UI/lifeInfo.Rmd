@@ -107,6 +107,20 @@ myDependency <- htmltools::htmlDependency(
 
   * If src is in other path, use `web$config_cssJsPath("your_path")` in **makecondition** -- no need to change `web$cssJsPath` (it will change accordingly).
 
+```{html jquery}
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+```
+
+```{r new_jquery}
+new_jquery <- 
+  htmltools::htmlDependency(
+    name="jquery",
+    version="3.6.0",
+    src=c(href = "https://code.jquery.com/"),
+    # to use the same library here must use href, not filepath; otherwise, the current jquery system will be removed.
+    script = c("jquery-3.6.0.js")
+  )
+```
 
 ```{r local_jquery}
 local_jquery <- 
@@ -128,7 +142,8 @@ html_complete <-
     html_placeholder,
     web$htmlDependencies$materialise(),
     local_jquery, 
-    myDependency
+    myDependency,
+    new_jquery
   )
 ```
 
