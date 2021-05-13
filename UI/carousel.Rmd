@@ -24,20 +24,28 @@ library(econR)
 web$foldername="docs" # output folder name
 web$html_filename <- "carousel.html"
 
+# source("R/scriptTest.R")
 ```
 
 
 ### carousel
 
-```{r carousel, drake=F}
- tags$div(class="carousel", 
-    tags$a(class="carousel-item", href="#one!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_a.png")),
-    tags$a(class="carousel-item", href="#two!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_b.png")),
-    tags$a(class="carousel-item", href="#three!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_c.png")),
-    tags$a(class="carousel-item", href="#four!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_d.png")),
-    tags$a(class="carousel-item", href="#five!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_e.png"))
+```{r card_reveal}
+card_reveal <- {
+  tags$div(class="card", 
+           tags$div(class="card-image waves-effect waves-block waves-light", 
+                    tags$img(class="activator", src="https://materializecss.github.io/materialize/images/office.jpg")
+           ),
+           tags$div(class="card-content", 
+                    tags$span(class="card-title activator grey-text text-darken-4", "Card Title", tags$i(class="material-icons right","more_vert")),
+                    tags$p( tags$a(href="#"," This is a link"))
+           ),
+           tags$div(class="card-reveal", 
+                    tags$span(class="card-title grey-text text-darken-4", "Card Title", tags$i(class="material-icons right","close")),
+                    tags$p( "Here is some more information about this product that is only revealed once clicked on.")
+           )
   )
-  
+}
 ```
 
 ```{r carousel, drake=F}
@@ -59,12 +67,10 @@ web$html_filename <- "carousel.html"
 
 ```{r}
 imglink <- "https://www.dropbox.com/s/vlhvqdw4w0b0oq4/KDFRc36.jpg?dl=0"
-validlink <- stringr::str_replace(imglink,
-                     "www.dropbox.com",
-                     "dl.dropboxusercontent.com")
+econR::parse_dropboxlink(imglink)
 ```
 
-```{r carousel}
+```{r carousel, drake=T}
  tags$div(class="carousel",
           tagList(
             generate_carousel_item(
@@ -135,19 +141,47 @@ card4 <- {
 }
 ```
 
+### Cardholder
+
 ```{r cardHolder}
 cardHolder <- function(img_src){
   tags$div(class="card", 
         tags$div(class="card-image", 
-          tags$img(src=img_src)#,
-          # tags$span(class="card-title"," Card Title"),
-          # tags$a(class="btn-floating halfway-fab waves-effect waves-light red", tags$i(class="material-icons"," add"))
-        )#,
-        # tags$div(class="card-content", 
-        #   tags$p(class="card-title", "Card Title"),
-        #   tags$p(" I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.")
-        # )
-        )
+          tags$img(
+            class="activator",
+            src=img_src)
+          ),
+        tags$div(
+          class="card-content", 
+          tags$span(
+            class="card-title activator grey-text text-darken-4",
+            "Card Title", tags$i(class="material-icons right","more_vert"))
+        ),
+       tags$div(
+         class="card-reveal", 
+         tags$span(class="card-title grey-text text-darken-4", 
+          "Card Title", tags$i(class="material-icons right","close")),
+      tags$p( "Here is some more information about this product that is only revealed once clicked on.")
+      )
+    )
+}
+```
+
+```{r cardHolder2}
+cardHolder2 <- function(img_src){
+  tags$div(class="card", 
+        tags$div(class="card-image", 
+          tags$img(src=img_src)
+        ),
+        tags$div(class="card-content", 
+      tags$span(class="card-title activator grey-text text-darken-4", "Card Title", tags$i(class="material-icons right"," more_vert")),
+      tags$p( tags$a(href="#"," This is a link"))
+    ),
+    tags$div(class="card-reveal", 
+      tags$span(class="card-title grey-text text-darken-4", "Card Title", tags$i(class="material-icons right"," close")),
+      tags$p( "Here is some more information about this product that is only revealed once clicked on.")
+    )
+      )
 }
 ```
 
@@ -230,34 +264,6 @@ floatingBtn <- tags$div(class="fixed-action-btn",
       
 ```
 
-### Card holder
-<div class="card large">
-        <div class="card-image">
-          <img src="https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg">
-          <span class="card-title">Card Title</span>
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-        </div>
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-        </div>
-        </div>
-            
-```{r cardHolder, drake=F}
-cardHolder <- function(){
-  tags$div(class="card large", 
-        tags$div(class="card-image", 
-          tags$img(src="https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg"),
-          tags$span(class="card-title"," Card Title"),
-          tags$a(class="btn-floating halfway-fab waves-effect waves-light red", tags$i(class="material-icons"," add"))
-        ),
-        tags$div(class="card-content", 
-          tags$p(" I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.")
-        )
-        )
-}
-```
-
-
 ### Body Tags
 
 
@@ -269,7 +275,7 @@ bodyTags <- {
                class="row", 
                carousel,
                floatingBtn
-             )#,
+             )
              #floatingBtn
              # tags$div(
              #   class="row", greenbtn
@@ -371,10 +377,6 @@ htmltools::save_html(
 ```{r}
 web$browse()
 ```
-
-
-
-
 
 ## JS
 

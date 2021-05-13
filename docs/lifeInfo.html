@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link href="lib/myown-1.0/css/mystyle.css" rel="stylesheet" />
+<script src="lib/myown-1.0/js/mydesign.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.2.0/sha.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<html>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="valign-wrapper">
+          <i class="material-icons">directions_bus</i>
+          916
+        </div>
+        <div class="valign-wrapper less5mins">
+          <a class="btn-floating pulse red">
+            <i class="material-icons">directions_bus</i>
+          </a>
+          916
+        </div>
+        <div class="valign-wrapper between5and10">
+          <i class="material-icons">directions_bus</i>
+          916
+        </div>
+        <div class="valign-wrapper more10mins">
+          <i class="material-icons">directions_bus</i>
+          916
+        </div>
+      </div>
+    </div>
+    <style>a {
+  color: salmon;
+}
+
+button {
+  background-color: salmon;
+}
+</style>
+    <script>$(function () {
+    $.ajax({
+        type: 'GET',
+        url: 'https://ptx.transportdata.tw/MOTC/v2/Rail/TRA/Station?$top=10&$format=JSON', //欲呼叫之API網址(此範例為台鐵車站資料)
+        dataType: 'json',
+        headers: GetAuthorizationHeader(),
+        success: function (Data) {
+            bus_data = Data;
+            console.log(bus_data)
+        }
+    });
+});
+
+function GetAuthorizationHeader() {
+    var AppID = '79b0ba94a5714d5f9ea84d55c41c5d1f';
+    var AppKey = 'VV503EXrrDt7yHypO6qP8h0ILmo';
+
+    var GMTString = new Date().toGMTString();
+    var ShaObj = new jsSHA('SHA-1', 'TEXT');
+    ShaObj.setHMACKey(AppKey, 'TEXT');
+    ShaObj.update('x-date: ' + GMTString);
+    var HMAC = ShaObj.getHMAC('B64');
+    var Authorization = 'hmac username=\"' + AppID + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
+
+    return { 'Authorization': Authorization, 'X-Date': GMTString /*,'Accept-Encoding': 'gzip'*/}; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
+}</script>
+  </body>
+</html>
+</html>

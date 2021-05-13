@@ -1,46 +1,44 @@
 ---
-drake_cache: ".lifeInfo"
+drake_cache: ".browsable"
 ---
 
-## SASS
+## Materialise Framework
+
+  * <https://materializecss.github.io/materialize/>
+
+## Setup environment
+
+  * Addins: Initiate drake -> `drake$source_plan()` -> `drake$makePlan()`.
+  
+  * `web$browse()` to see the output. 
+  
+  * If any change to Rmd or js/ and css/ folder, then `web$update()` -> `web$browse()` to see the change.
+  
+  * Your html output file is in `web$output_filepath()`.
 
 ```{r makecondition}
-library(sass)
-my_sass <- sass(
-  sass_file("sass_demo.scss"))
+library(dplyr)
+library(htmltools)
+library(econR)
+.GlobalEnv$web <- econR::Web()
+web$foldername="docs2" # output folder name
+web$html_filename <- "index.html"
+
+```
+
+### Widgets
+  
+```{r makecondition_widgets}
+library(plotly)
 ```
 
 
-```{r tag_sass}
-tag_sass <- tags$style(
-  my_sass
+```{r experimental_element}
+experimental_element <- subplot(
+  plot_ly(mpg, x = ~cty, y = ~hwy, name = "default"),
+  plot_ly(mpg, x = ~cty, y = ~hwy) %>% 
+    add_markers(alpha = 0.2, name = "alpha")
 )
-```
-
-## buses
-
-```{r buses} 
-tagList(
-  tags$div(
-  class="valign-wrapper",
-  tags$i(class="material-icons","directions_bus"), "916"
-),
-tags$div(
-  class="valign-wrapper less5mins",
-  tags$a(class="btn-floating pulse red",
-       tags$i(class="material-icons","directions_bus")),
- "916"),
-tags$div(
-  class="valign-wrapper between5and10",
-  tags$i(class="material-icons","directions_bus"), "916"
-),
-tags$div(
-  class="valign-wrapper more10mins",
-  tags$i(class="material-icons","directions_bus"), "916"
-)
-)
-
-
 ```
 
 
@@ -51,9 +49,9 @@ bodyTags <- {
   htmltools::tagList(
     tags$div(class="container",
              tags$div(class="row",
-                      buses
-                      )),
-    tag_sass
+                      tags$div(class="col s12",
+                               experimental_element)
+                      ))
   )
 }
 ```

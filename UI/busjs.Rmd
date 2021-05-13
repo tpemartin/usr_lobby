@@ -1,5 +1,5 @@
 ---
-drake_cache: ".myHtml"
+drake_cache: ".busjs"
 ---
 
 ## Materialise Framework
@@ -26,22 +26,6 @@ web$html_filename <- "index.html"
 
 ```
 
-### Widgets
-  
-```{r makecondition_widgets}
-library(plotly)
-```
-
-
-```{r plt_widget}
-plt_widget <- subplot(
-  plot_ly(mpg, x = ~cty, y = ~hwy, name = "default"),
-  plot_ly(mpg, x = ~cty, y = ~hwy) %>% 
-    add_markers(alpha = 0.2, name = "alpha")
-)
-```
-
-
 ### Body Tags
 
 ```{r bodyTags}
@@ -54,7 +38,7 @@ bodyTags <- {
     tags$div(class="container",
              tags$div(class="row",
                       tags$div(class="col s12",
-                               plt_widget)
+                               bus)
                       ))
   )
 }

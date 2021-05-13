@@ -5,14 +5,15 @@ $(function () {
         dataType: 'json',
         headers: GetAuthorizationHeader(),
         success: function (Data) {
-            $('body').text(JSON.stringify(Data));
+            bus_data = Data;
+            console.log(bus_data)
         }
     });
 });
 
 function GetAuthorizationHeader() {
-    var AppID = 'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF';
-    var AppKey = 'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF';
+    var AppID = '79b0ba94a5714d5f9ea84d55c41c5d1f';
+    var AppKey = 'VV503EXrrDt7yHypO6qP8h0ILmo';
 
     var GMTString = new Date().toGMTString();
     var ShaObj = new jsSHA('SHA-1', 'TEXT');
@@ -22,4 +23,12 @@ function GetAuthorizationHeader() {
     var Authorization = 'hmac username=\"' + AppID + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
 
     return { 'Authorization': Authorization, 'X-Date': GMTString /*,'Accept-Encoding': 'gzip'*/}; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
+}
+
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
 }

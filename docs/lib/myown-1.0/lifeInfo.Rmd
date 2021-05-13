@@ -2,6 +2,16 @@
 drake_cache: ".lifeInfo"
 ---
 
+```{r makecondition}
+library(dplyr)
+library(htmltools)
+library(econR)
+.GlobalEnv$web <- econR::Web()
+web$foldername="docs" # output folder name
+web$html_filename <- "lifeInfo.html"
+
+```
+
 ## SASS
 
 ```{r makecondition}
@@ -44,6 +54,26 @@ tags$div(
 ```
 
 
+### BUS js
+
+```{r busJs}
+htmltools::includeScript("js/bus.js")
+```
+
+### SHA js
+
+```{r sha_js}
+sha_js <- 
+  htmltools::htmlDependency(
+    name="sha",
+    version="3.2.0",
+    src=c(href = "https://cdnjs.cloudflare.com"),
+    # to use the same library here must use href, not filepath; otherwise, the current jquery system will be removed.
+    script = c("ajax/libs/jsSHA/3.2.0/sha.min.js")
+  )
+```
+
+
 ### Body Tags
 
 ```{r bodyTags}
@@ -53,7 +83,8 @@ bodyTags <- {
              tags$div(class="row",
                       buses
                       )),
-    tag_sass
+    tag_sass,
+    busJs
   )
 }
 ```
@@ -143,7 +174,8 @@ html_complete <-
     web$htmlDependencies$materialise(),
     local_jquery, 
     myDependency,
-    new_jquery
+    new_jquery,
+    sha_js
   )
 ```
 
@@ -168,3 +200,9 @@ web$browse()
 
 
 
+
+
+## JS
+
+
+<!--JS end-->
