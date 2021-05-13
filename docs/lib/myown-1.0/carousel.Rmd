@@ -26,6 +26,39 @@ web$html_filename <- "carousel.html"
 
 ```
 
+### 研之有物card
+
+```{r Academia_card}
+Academia_card <- tagList(
+  tags$div(class="academia_border", #card底圖
+    tags$img(class="card_row card_pic",src="https://research.sinica.edu.tw/wp-content/uploads/2020/11/logo.png"),
+    tags$div(class="card_title_subtitle",
+      tags$div(class="card_row card_title",id="aca_title","和爸媽吵架是不孝嗎？心理學家剖析青少年親子衝突的內心小劇場"),
+    tags$div(class="card_row card_subtitle",id="aca_subtitle","青少年的親子衝突研究")
+    ),
+    tags$div(
+      class="card_row card_content",id="aca_content",
+      "親子衝突是眾多臺灣家庭的困擾。為人父母，你曾經覺得「都是為了孩子好」，最後卻不歡而散嗎？身為青少年，又是否會因為害怕「不孝」的壓力，與爸媽爭執時選擇消極逃避，從未好好訴說自己的想法？"),
+    tags$img(
+      class="card_pic1 box_shadow",
+      src="https://research.sinica.edu.tw/wp-content/uploads/2021/05/yeh-kuang-hui-01.jpeg"),
+      tags$table(  
+  tags$tr(class="card_pic1", 
+    tags$td(class="time_author", "2021-03-16"
+),
+    tags$td(class="time_author",
+      tags$div("採訪撰文｜吳易珊、劉芝吟"),
+      tags$div("美術設計｜林洵安")
+      ),
+    tags$td(rowspan="2"," ")
+  )
+)
+  )
+  
+)
+```
+
+
 
 ### carousel
 
@@ -82,8 +115,9 @@ validlink <- stringr::str_replace(imglink,
                 class="responsive-img",
                 src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg"
               )
+            ),
+            tags$div(class="carousel-item", Academia_card)
             )
-          )
 )
   
 ```

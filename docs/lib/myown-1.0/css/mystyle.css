@@ -1,5 +1,7 @@
 body {
   font-family: "Noto Serif TC", sans-serif;
+/*background: radial-gradient(32.4% 53.95% at 51.18% 61.5%, rgba(255, 242, 242, 0.499235) 1.26%, #F1EB5E 97.89%, #FFFFFF 100%);
+background-repeat: no-repeat;*/
 }
 
 .less5mins {
@@ -16,9 +18,71 @@ body {
 
 .carousel {
 min-height: 600px;
+width: 1500px; /*width還需調整，置中*/
 }
 
 .carousel .carousel-item{
 width: 400px;
 height: 100%;
+}
+
+.academia_border{
+border-style: solid;
+border-color: red;
+background-color: #F3F2F2;
+/*background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJAm7_SxrTKkqaZbfzqhOvoUrlG5y7gH67AQ&usqp=CAU');
+background-repeat: no-repeat;
+background-size: 100%;*/
+background-image: url('img/bookcover.png');
+}
+
+.card_pic{
+width: 360px;
+align-content: center;
+display: block; /*https://www.w3schools.com/howto/howto_css_image_center.asp*/
+margin-left: auto;
+margin-right: auto;
+padding-top: 10px;
+}
+
+.card_pic1{
+width: 310px;
+align-content: center;
+display: block; /*https://www.w3schools.com/howto/howto_css_image_center.asp*/
+margin-left: auto;
+margin-right: auto;
+padding-top: 10px;
+}
+
+
+.box_shadow {
+    box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card_title{
+font-size: 20px;
+}
+
+.card_subtitle{
+font-size: 16px;
+color: #7B7575;
+}
+
+.card_title_subtitle{
+padding-left:40px;
+padding-right:40px;
+}
+
+.card_content{
+  padding:0px 25px;
+}
+
+
+.card_row{
+  margin-bottom: 7px;
+}
+
+.time_author{
+  font-size: 10px;
+  padding:5px;
 }
