@@ -1,4 +1,3 @@
-## ----makecondition------------------------------------------------------------------------
 library(dplyr)
 library(htmltools)
 library(econR)
@@ -6,21 +5,18 @@ library(econR)
 web$foldername="docs2" # output folder name
 web$html_filename <- "index.html"
 
-
-
-## ----makecondition_widgets----------------------------------------------------------------
 library(plotly)
-
-
-## ----experimental_element-----------------------------------------------------------------
+options(rstudio_drake_cache = storr::storr_rds("/Users/martinl/Github/usr_lobby/UI/.myHtml", hash_algorithm = "xxhash64"))
+plan_browsable <- 
+drake::drake_plan(
+experimental_element={
 experimental_element <- subplot(
   plot_ly(mpg, x = ~cty, y = ~hwy, name = "default"),
   plot_ly(mpg, x = ~cty, y = ~hwy) %>% 
     add_markers(alpha = 0.2, name = "alpha")
 )
-
-
-## ----bodyTags-----------------------------------------------------------------------------
+},
+bodyTags={
 bodyTags <- {
   htmltools::tagList(
     tags$div(class="container",
@@ -30,18 +26,8 @@ bodyTags <- {
                       ))
   )
 }
-## ----headTags-----------------------------------------------------------------------------
-headTags <- {
-  htmltools::tagList(
-    htmltools::tags$link(
-      href="https://fonts.googleapis.com/icon?family=Material+Icons",
-      rel="stylesheet"
-    )
-  )
-}
-
-
-## ----html_placeholder---------------------------------------------------------------------
+},
+html_placeholder={
 html_placeholder <- tags$html(
   tags$head(
     do.call(htmltools::tagList, headTags),
@@ -54,11 +40,18 @@ html_placeholder <- tags$html(
     do.call(htmltools::tagList, bodyTags)
   )
 )
-
-
-
-
-## ----myDependency-------------------------------------------------------------------------
+},
+headTags={
+headTags <- {
+  htmltools::tagList(
+    htmltools::tags$link(
+      href="https://fonts.googleapis.com/icon?family=Material+Icons",
+      rel="stylesheet"
+    )
+  )
+}
+},
+myDependency={
 myDependency <- htmltools::htmlDependency(
   name="myown",
   version="1.0",
@@ -68,9 +61,8 @@ myDependency <- htmltools::htmlDependency(
   head = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
 '
 )
-
-
-## ----local_jquery-------------------------------------------------------------------------
+},
+local_jquery={
 local_jquery <- 
   htmltools::htmlDependency(
     name="jquery",
@@ -79,9 +71,8 @@ local_jquery <-
     # to use the same library here must use href, not filepath; otherwise, the current jquery system will be removed.
     script = c("jquery.min.js")
   )
-
-
-## ----html_complete------------------------------------------------------------------------
+},
+html_complete={
 html_complete <- 
   htmltools::tagList(
     html_placeholder,
@@ -89,16 +80,12 @@ html_complete <-
     local_jquery, 
     myDependency
   )
-
-
-## ----save_html----------------------------------------------------------------------------
+},
+save_html={
 htmltools::save_html(
   html_complete, 
   file = web$output_filepath(),
   libdir="lib"
 )
-
-
-## -----------------------------------------------------------------------------------------
-web$browse()
-
+}
+)

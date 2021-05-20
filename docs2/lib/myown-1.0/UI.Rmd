@@ -1,4 +1,22 @@
-## ----makecondition------------------------------------------------------------------------
+---
+drake_cache: ".myHtml"
+---
+
+## Materialise Framework
+
+  * <https://materializecss.github.io/materialize/>
+
+## Setup environment
+
+  * Addins: Initiate drake -> `drake$source_plan()` -> `drake$makePlan()`.
+  
+  * `web$browse()` to see the output. 
+  
+  * If any change to Rmd or js/ and css/ folder, then `web$update()` -> `web$browse()` to see the change.
+  
+  * Your html output file is in `web$output_filepath()`.
+
+```{r makecondition}
 library(dplyr)
 library(htmltools)
 library(econR)
@@ -6,42 +24,46 @@ library(econR)
 web$foldername="docs2" # output folder name
 web$html_filename <- "index.html"
 
+```
 
-
-## ----makecondition_widgets----------------------------------------------------------------
+### Widgets
+  
+```{r makecondition_widgets}
 library(plotly)
+```
 
 
-## ----experimental_element-----------------------------------------------------------------
-experimental_element <- subplot(
+```{r plt_widget}
+plt_widget <- subplot(
   plot_ly(mpg, x = ~cty, y = ~hwy, name = "default"),
   plot_ly(mpg, x = ~cty, y = ~hwy) %>% 
     add_markers(alpha = 0.2, name = "alpha")
 )
+```
 
 
-## ----bodyTags-----------------------------------------------------------------------------
+### Body Tags
+
+```{r bodyTags}
 bodyTags <- {
   htmltools::tagList(
+    tags$main(
+      tags$h5(class="center-align",
+      "Materialise with Plotly")
+    ),
     tags$div(class="container",
              tags$div(class="row",
                       tags$div(class="col s12",
-                               experimental_element)
+                               plt_widget)
                       ))
   )
 }
-## ----headTags-----------------------------------------------------------------------------
-headTags <- {
-  htmltools::tagList(
-    htmltools::tags$link(
-      href="https://fonts.googleapis.com/icon?family=Material+Icons",
-      rel="stylesheet"
-    )
-  )
-}
+```
 
 
-## ----html_placeholder---------------------------------------------------------------------
+## HTML Structure
+
+```{r html_placeholder}
 html_placeholder <- tags$html(
   tags$head(
     do.call(htmltools::tagList, headTags),
@@ -54,11 +76,26 @@ html_placeholder <- tags$html(
     do.call(htmltools::tagList, bodyTags)
   )
 )
+```
 
+## Dependencies
 
+### Head Tags
 
+```{r headTags}
+headTags <- {
+  htmltools::tagList(
+    htmltools::tags$link(
+      href="https://fonts.googleapis.com/icon?family=Material+Icons",
+      rel="stylesheet"
+    )
+  )
+}
+```
 
-## ----myDependency-------------------------------------------------------------------------
+### Define dependency
+
+```{r myDependency}
 myDependency <- htmltools::htmlDependency(
   name="myown",
   version="1.0",
@@ -68,9 +105,12 @@ myDependency <- htmltools::htmlDependency(
   head = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
 '
 )
+```
+
+  * If src is in other path, use `web$config_cssJsPath("your_path")` in **makecondition** -- no need to change `web$cssJsPath` (it will change accordingly).
 
 
-## ----local_jquery-------------------------------------------------------------------------
+```{r local_jquery}
 local_jquery <- 
   htmltools::htmlDependency(
     name="jquery",
@@ -79,9 +119,12 @@ local_jquery <-
     # to use the same library here must use href, not filepath; otherwise, the current jquery system will be removed.
     script = c("jquery.min.js")
   )
+```
+
+### Attach dependency
 
 
-## ----html_complete------------------------------------------------------------------------
+```{r html_complete}
 html_complete <- 
   htmltools::tagList(
     html_placeholder,
@@ -89,16 +132,26 @@ html_complete <-
     local_jquery, 
     myDependency
   )
+```
+
+  * If not using jquery from htmlwidgets, replace `local_jquery` with `web$htmlDependencies$jquery()`
 
 
-## ----save_html----------------------------------------------------------------------------
+## Save
+
+```{r save_html}
 htmltools::save_html(
   html_complete, 
   file = web$output_filepath(),
   libdir="lib"
 )
+```
 
+## Browse
 
-## -----------------------------------------------------------------------------------------
+```{r}
 web$browse()
+```
+
+
 
