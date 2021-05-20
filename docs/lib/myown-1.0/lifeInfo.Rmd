@@ -56,8 +56,10 @@ tags$div(
 
 ### BUS js
 
+  * <http://ptx.transportdata.tw/MOTC?t=Bus&v=2#!/CityBus/CityBusApi_EstimatedTimeOfArrival>
+
 ```{r busJs}
-htmltools::includeScript("js/bus.js")
+htmltools::includeScript("js/bus2.js")
 ```
 
 ### SHA js
@@ -73,6 +75,29 @@ sha_js <-
   )
 ```
 
+### PTX
+
+  * <https://ptx.transportdata.tw/MOTC?t=Bus&v=2#!/CityBus/CityBusApi_EstimatedTimeOfArrival>
+
+
+```{r }
+xfun::download_file("https://www.dropbox.com/s/sb4fjpm4xjzgsns/voteData.Rdata?dl=1")
+```
+
+
+```{r makecondition_vote}
+load("voteData.Rdata")
+```
+
+```{r tag_voteData}
+tag_voteData <- tags$script(
+  id="data",
+  type="application/json",
+  jsonlite::toJSON(voteData, auto_unbox = F)
+)
+```
+
+
 
 ### Body Tags
 
@@ -81,10 +106,12 @@ bodyTags <- {
   htmltools::tagList(
     tags$div(class="container",
              tags$div(class="row",
-                      buses
+                      buses,
+                      exampleSVG
                       )),
     tag_sass,
-    busJs
+    busJs,
+    tag_voteData
   )
 }
 ```
@@ -108,6 +135,18 @@ html_placeholder <- tags$html(
 ```
 
 ## Dependencies
+
+### Images
+
+```{r myImg}
+myImg <- htmltools::htmlDependency(
+  name="images",
+  version="1.0",
+  src=c(filepath="/Users/martinl/Github/usr_lobby/UI/img"),
+  all_files = TRUE
+)
+```
+
 
 ### Head Tags
 
@@ -175,7 +214,8 @@ html_complete <-
     local_jquery, 
     myDependency,
     new_jquery,
-    sha_js
+    sha_js,
+    myImg
   )
 ```
 
@@ -190,6 +230,14 @@ htmltools::save_html(
   file = web$output_filepath(),
   libdir="lib"
 )
+```
+
+```{r exampleSVG, drake=F}
+exampleSVG <- htmltools::includeHTML("img/example.svg")
+```
+
+```{r exampleSVG, drake=T}
+exampleSVG <- tags$img(src="lib/images-1.0/example.svg")
 ```
 
 ## Browse

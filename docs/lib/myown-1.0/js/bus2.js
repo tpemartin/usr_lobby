@@ -1,15 +1,22 @@
 $(function () {
+    setInterval(function(){ 
+        update_bus_data('916');
+         }, 30000);
+});
+
+function update_bus_data(busNumber){
     $.ajax({
         type: 'GET',
-        url: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/916?$top=30&$format=JSON', 
+        url: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/'+busNumber+'?$top=30&$format=JSON', 
         dataType: 'json',
         headers: GetAuthorizationHeader(),
         success: function (Data) {
             bus_data = Data;
-            console.log(bus_data)
+            console.log(bus_data[15]["EstimateTime"]);
+            //console.log(bus_data)
         }
     });
-});
+}
 
 function GetAuthorizationHeader() {
     var AppID = '79b0ba94a5714d5f9ea84d55c41c5d1f';

@@ -264,16 +264,59 @@ floatingBtn <- tags$div(class="fixed-action-btn",
       
 ```
 
+### video
+
+```{r video}
+tags$div(class="video-container",
+    tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/z7GFa9Idi-M", title="YouTube video player", frameborder="0", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen="")
+    )
+```
+
+
+### Slide up experiment
+
+```{r frontTitle}
+frontTitle <- tags$span( tags$i(class="material-icons"," local_activity"),
+                         "活動")
+```
+
+```{r slideupCard}
+slideupCard <- function(){
+  tags$div(class="card", 
+    tags$div(class="card-image waves-effect waves-block waves-light", 
+      tags$img(class="activator", src="https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg")
+    ),
+    tags$div(class="card-content", 
+      tags$span(class="card-title activator grey-text text-darken-4", frontTitle,
+                tags$i(class="material-icons right"," more_vert"))
+    ),
+    tags$div(class="card-reveal", 
+      tags$span(class="card-title grey-text text-darken-4", "Card Title", tags$i(class="material-icons right"," close")),
+      tags$p(" Here is some more information about this product that is only revealed once clicked on.")
+    )
+  )
+}
+```
+
+
 ### Body Tags
 
 
 ```{r bodyTags, drake=T}
 bodyTags <- {
   htmltools::tagList(
-    tags$div(class="container",
+    tags$div(#class="container",
              tags$div(
                class="row", 
-               carousel,
+               tags$div(
+                 class="col s8",
+                 video
+               ),
+               tags$div(
+                 class="col s4",
+                 slideupCard()
+                 #carousel
+               ),
                floatingBtn
              )
              #floatingBtn

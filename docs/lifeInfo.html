@@ -36,6 +36,7 @@
           <i class="material-icons">directions_bus</i>
           916
         </div>
+        <img src="lib/images-1.0/example.svg"/>
       </div>
     </div>
     <style>a {
@@ -47,17 +48,24 @@ button {
 }
 </style>
     <script>$(function () {
+    setInterval(function(){ 
+        update_bus_data('916');
+         }, 30000);
+});
+
+function update_bus_data(busNumber){
     $.ajax({
         type: 'GET',
-        url: 'https://ptx.transportdata.tw/MOTC/v2/Rail/TRA/Station?$top=10&$format=JSON', //欲呼叫之API網址(此範例為台鐵車站資料)
+        url: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/'+busNumber+'?$top=30&$format=JSON', 
         dataType: 'json',
         headers: GetAuthorizationHeader(),
         success: function (Data) {
             bus_data = Data;
-            console.log(bus_data)
+            console.log(bus_data[15]["EstimateTime"]);
+            //console.log(bus_data)
         }
     });
-});
+}
 
 function GetAuthorizationHeader() {
     var AppID = '79b0ba94a5714d5f9ea84d55c41c5d1f';
@@ -71,7 +79,16 @@ function GetAuthorizationHeader() {
     var Authorization = 'hmac username=\"' + AppID + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
 
     return { 'Authorization': Authorization, 'X-Date': GMTString /*,'Accept-Encoding': 'gzip'*/}; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
+}
+
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
 }</script>
+    <script id="data" type="application/json">[{"COUNTYNAME":"宜蘭縣","dpp":0.6328,"kmt":0.328,"pfp":0.0391},{"COUNTYNAME":"彰化縣","dpp":0.5717,"kmt":0.3824,"pfp":0.0459},{"COUNTYNAME":"南投縣","dpp":0.5083,"kmt":0.4472,"pfp":0.0445},{"COUNTYNAME":"雲林縣","dpp":0.6156,"kmt":0.346,"pfp":0.0383},{"COUNTYNAME":"基隆市","dpp":0.5082,"kmt":0.4392,"pfp":0.0525},{"COUNTYNAME":"臺北市","dpp":0.5365,"kmt":0.4201,"pfp":0.0434},{"COUNTYNAME":"新北市","dpp":0.5652,"kmt":0.3891,"pfp":0.0457},{"COUNTYNAME":"臺中市","dpp":0.5695,"kmt":0.3806,"pfp":0.0499},{"COUNTYNAME":"臺南市","dpp":0.6738,"kmt":0.291,"pfp":0.0352},{"COUNTYNAME":"桃園市","dpp":0.5478,"kmt":0.404,"pfp":0.0482},{"COUNTYNAME":"苗栗縣","dpp":0.4502,"kmt":0.5032,"pfp":0.0466},{"COUNTYNAME":"嘉義市","dpp":0.6137,"kmt":0.3479,"pfp":0.0384},{"COUNTYNAME":"嘉義縣","dpp":0.6422,"kmt":0.3216,"pfp":0.0362},{"COUNTYNAME":"高雄市","dpp":0.6223,"kmt":0.3463,"pfp":0.0314},{"COUNTYNAME":"臺東縣","dpp":0.3812,"kmt":0.5828,"pfp":0.036},{"COUNTYNAME":"花蓮縣","dpp":0.3591,"kmt":0.6038,"pfp":0.0371},{"COUNTYNAME":"新竹市","dpp":0.5526,"kmt":0.3934,"pfp":0.054},{"COUNTYNAME":"新竹縣","dpp":0.4688,"kmt":0.4745,"pfp":0.0567},{"COUNTYNAME":"屏東縣","dpp":0.6216,"kmt":0.351,"pfp":0.0274}]</script>
   </body>
 </html>
 </html>
