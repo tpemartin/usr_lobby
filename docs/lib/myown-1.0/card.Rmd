@@ -1,5 +1,5 @@
 ---
-drake_cache: ".myHtml"
+drake_cache: ".card"
 ---
 
 ## Materialise Framework
@@ -24,6 +24,41 @@ library(econR)
 web$foldername="docs2" # output folder name
 web$html_filename <- "index.html"
 
+```
+
+## card reveal
+
+```{r card}
+card <- tags$div(class="card", 
+    tags$div(class="card-image waves-effect waves-block waves-light", 
+      tags$img(class="activator", src="https://materializecss.github.io/materialize/images/office.jpg")
+    ),
+    tags$div(class="card-content", 
+      tags$span(class="card-title activator grey-text text-darken-4", "Card Title", tags$i(class="material-icons right"," more_vert")),
+      tags$p( tags$a(href="#"," This is a link"))
+    ),
+    tags$div(class="card-reveal", 
+      tags$span(class="card-title grey-text text-darken-4", "Card Title"),
+      tags$p(" Here is some more information about this product that is only revealed once clicked on."), tags$i(class="material-icons right"," close")
+    )
+  )
+```
+
+```{r card2}
+card2 <- tags$div(class="card", 
+    tags$div(class="card-image waves-effect waves-block waves-light", 
+      tags$img(class="activator", src="https://materializecss.github.io/materialize/images/office.jpg")
+    ),
+    tags$div(class="card-content", 
+      tags$span(class="card-title activator grey-text text-darken-4", "Card Title", tags$i(class="material-icons right"," more_vert")),
+      tags$p( tags$a(href="#"," This is a link"))
+    ),
+    tags$div(class="card-reveal", 
+      
+      tags$p(" Here is some more information about this product that is only revealed once clicked on."),
+      tags$span(class="card-title grey-text text-darken-4", "Card Title", tags$i(class="material-icons right"," close"))
+    )
+  )
 ```
 
 ### Widgets
@@ -53,8 +88,10 @@ bodyTags <- {
     ),
     tags$div(class="container",
              tags$div(class="row",
-                      tags$div(class="col s12",
-                               plt_widget)
+                      tags$div(class="col s5",
+                               card),
+                      tags$div(class="col s5",
+                               card2)
                       ))
   )
 }
@@ -64,7 +101,7 @@ bodyTags <- {
 ## HTML Structure
 
 ```{r html_placeholder}
-html_placeholder <- tagList(
+html_placeholder <- tags$html(
   tags$head(
     do.call(htmltools::tagList, headTags),
     tags$meta(
@@ -155,3 +192,9 @@ web$browse()
 
 
 
+
+
+## JS
+
+
+<!--JS end-->

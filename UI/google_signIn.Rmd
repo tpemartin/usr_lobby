@@ -1,5 +1,5 @@
 ---
-drake_cache: ".myHtml"
+drake_cache: ".google_signIn"
 ---
 
 ## Materialise Framework
@@ -21,28 +21,59 @@ library(dplyr)
 library(htmltools)
 library(econR)
 .GlobalEnv$web <- econR::Web()
-web$foldername="docs2" # output folder name
-web$html_filename <- "index.html"
+web$foldername="docs" # output folder name
+web$html_filename <- "signin.html"
 
 ```
 
-### Widgets
+## Google SignIn
+
+### Dependency
   
-```{r makecondition_widgets}
-library(plotly)
+```{r dep_googlePlatformJs}
+dep_googlePlatformJs <-
+  htmltools::htmlDependency(
+    name="google_signIn",
+    version="1.0.0",
+    src=c(""),
+    head="<script async defer src=\"https://apis.google.com/js/platform.js\">
+    </script>
+    <meta name=\"google-signin-client_id\" content=\"543220568418-kgkh418f7a6i6rl7k78taeh0cgm9tdkm.apps.googleusercontent.com\">")
+
+
+
 ```
 
+### Button
 
-```{r plt_widget}
-plt_widget <- subplot(
-  plot_ly(mpg, x = ~cty, y = ~hwy, name = "default"),
-  plot_ly(mpg, x = ~cty, y = ~hwy) %>% 
-    add_markers(alpha = 0.2, name = "alpha")
+```{r tag_signIn}
+tag_signIn <- tags$div(
+  class="g-signin2", `data-onsuccess`="onSignIn"
 )
 ```
 
+```{r makecondition_root}
+.root <- rprojroot::is_rstudio_project$make_fix_file()
+```
 
-### Body Tags
+### Other JS
+
+```{r dep_google_signInJs}
+dep_google_signInJs <-
+  htmltools::htmlDependency(
+    name="signIn",
+    version="1.0.0",
+    src = c(
+      filepath=file.path(.root(),"googleSignIn")
+    ),
+    script = "signIn.js"
+  )
+
+```
+
+
+
+## Body Tags
 
 ```{r bodyTags}
 bodyTags <- {
@@ -54,7 +85,7 @@ bodyTags <- {
     tags$div(class="container",
              tags$div(class="row",
                       tags$div(class="col s12",
-                               plt_widget)
+                               tag_signIn)
                       ))
   )
 }
@@ -130,7 +161,9 @@ html_complete <-
     html_placeholder,
     web$htmlDependencies$materialise(),
     local_jquery, 
-    myDependency
+    myDependency,
+    dep_google_signInJs,
+    dep_googlePlatformJs
   )
 ```
 
@@ -155,3 +188,9 @@ web$browse()
 
 
 
+
+
+## JS
+
+
+<!--JS end-->

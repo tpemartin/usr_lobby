@@ -64,7 +64,7 @@ bodyTags <- {
 ## HTML Structure
 
 ```{r html_placeholder}
-html_placeholder <- tags$html(
+html_placeholder <- tagList(
   tags$head(
     do.call(htmltools::tagList, headTags),
     tags$meta(
