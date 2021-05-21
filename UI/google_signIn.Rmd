@@ -160,7 +160,7 @@ html_complete <-
   htmltools::tagList(
     html_placeholder,
     web$htmlDependencies$materialise(),
-    local_jquery, 
+    web$htmlDependencies$jquery(), 
     myDependency,
     dep_google_signInJs,
     dep_googlePlatformJs
