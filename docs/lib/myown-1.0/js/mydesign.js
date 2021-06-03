@@ -3,9 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var instance_tabs = M.Tabs.init(el_tabs);
     var elems_carousel = document.querySelectorAll('.carousel');
     var instances_carousel = M.Carousel.init(elems_carousel,{
-      dist: -80,
+      dist: 0,
       numVisible:3,
-      shift:200,
+      shift:100,
+      indicators: true
     }); 
     /*, {
       // specify options here

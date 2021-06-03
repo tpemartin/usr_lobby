@@ -26,6 +26,89 @@ web$html_filename <- "carousel.html"
 
 ```
 
+
+### activity_card
+```{r activity_card}
+activity_card<- tagList(
+  tags$div(
+  class="card", 
+    tags$div(
+      Academia_card
+    ),
+    tags$div(class="card-content", 
+      tags$span(
+        class="card-title activator grey-text text-darken-4", 
+        "Card Title"
+        )
+    )
+)
+)
+```
+
+
+### slideup_academia_card
+```{r slideup_academia_card,drake=F}
+slideup_card<- htmltools::tagList(tags$div(
+  class="card sticky-action", 
+    tags$div(
+      Academia_card
+    ),
+    tags$div(class="card-action card-content", 
+      tags$span(
+        class="card-title activator grey-text text-darken-4", 
+        "Card Title",
+        tags$i(class="material-icons right"," more_vert")
+        )
+    ),
+    tags$div(class="card-reveal", 
+      tags$span(class="card-title grey-text text-darken-4", "Card Title",tags$i(class="material-icons right"," close")),
+      tags$p(" is some more information about this product that is only revealed once clicked on.")
+    )
+  )
+)
+```
+
+```{r slideup_academia_card,drake=T}
+slideup_card<- htmltools::tagList(tags$div(class="card", 
+    tags$div(
+      Academia_card
+    ),
+    tags$div(class="card-content", 
+      tags$span(
+        class="card-title activator grey-text text-darken-4", 
+        "Card Title",
+        tags$i(class="material-icons right","more_vert")
+        )
+    ),
+    tags$div(class="card-reveal",
+      tags$div(" is some more information about this product that is only revealed once clicked on."),
+      tags$span(class="cross card-title grey-text text-darken-4", tags$i(class="material-icons right close-btn","close"))
+    )
+  )
+)
+```
+
+```{r slideup_card}
+slideup_card<- htmltools::tagList(tags$div(class="card sticky-action", 
+    tags$div(class="card-image waves-effect waves-block waves-light", 
+      tags$img(class="activator", src="https://dl.dropboxusercontent.com/s/vlhvqdw4w0b0oq4/KDFRc36.jpg?dl=0")
+    ),
+    tags$div(class="card-action card-content", 
+      tags$span(
+        class="card-title activator grey-text text-darken-4", 
+        "Card Title",
+        tags$i(class="material-icons right"," more_vert")
+        )
+    ),
+    tags$div(class="card-reveal", 
+      tags$span(class="card-title grey-text text-darken-4", "Card Title",tags$i(class="material-icons right"," close")),
+      tags$p(" is some more information about this product that is only revealed once clicked on.")
+    )
+  )
+)
+```
+
+
 ### 研之有物card
 
 ```{r Academia_card}
@@ -38,57 +121,28 @@ Academia_card <- tagList(
     ),
     tags$div(
       class="card_row card_content",id="aca_content",
-      "親子衝突是眾多臺灣家庭的困擾。為人父母，你曾經覺得「都是為了孩子好」，最後卻不歡而散嗎？身為青少年，又是否會因為害怕「不孝」的壓力，與爸媽爭執時選擇消極逃避，從未好好訴說自己的想法？"),
+      "親子衝突是眾多臺灣家庭的困擾。為人父母，你曾經覺得「都是為了孩子好」，最後卻不歡而散嗎？身為青少年，又是否會因為害怕「不孝」的壓力，與爸媽爭執時選擇消極逃避，從未好好訴說自己的想法..."),
     tags$img(
       class="card_pic1 box_shadow",
       src="https://research.sinica.edu.tw/wp-content/uploads/2021/05/yeh-kuang-hui-01.jpeg"),
-      tags$table(  
-  tags$tr(class="card_pic1", 
-    tags$td(class="time_author", "2021-03-16"
-),
-    tags$td(class="time_author",
-      tags$div("採訪撰文｜吳易珊、劉芝吟"),
-      tags$div("美術設計｜林洵安")
-      ),
-    tags$td(rowspan="2"," ")
-  )
-)
+    tags$div( 
+      class="row card_pic1 time_author",
+      tags$div(
+        class="col", #怎麼讓padding left變成0
+        "2021-03-16"),
+      tags$div(
+        class="col",
+        tags$div("採訪撰文｜吳易珊、劉芝吟"),
+        tags$div("美術設計｜林洵安")
+      )
+    )
   )
   
 )
 ```
-
-
 
 ### carousel
 
-```{r carousel, drake=F}
- tags$div(class="carousel", 
-    tags$a(class="carousel-item", href="#one!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_a.png")),
-    tags$a(class="carousel-item", href="#two!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_b.png")),
-    tags$a(class="carousel-item", href="#three!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_c.png")),
-    tags$a(class="carousel-item", href="#four!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_d.png")),
-    tags$a(class="carousel-item", href="#five!", tags$img(src="https://materializecss.github.io/materialize/images/placeholder/250x250_e.png"))
-  )
-  
-```
-
-```{r carousel, drake=F}
- tags$div(class="carousel",
-    tags$a(class="carousel-item", href="#one!", 
-           card1
-           ),
-    tags$a(class="carousel-item", href="#two!", 
-           poster_toy),
-    tags$a(class="carousel-item", href="#three!",
-          tags$img(
-            class="responsive-img",
-            src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg"
-      )
-    )
-)
-  
-```
 
 ```{r}
 imglink <- "https://www.dropbox.com/s/vlhvqdw4w0b0oq4/KDFRc36.jpg?dl=0"
@@ -97,7 +151,9 @@ validlink <- stringr::str_replace(imglink,
                      "dl.dropboxusercontent.com")
 ```
 
-```{r carousel}
+
+
+```{r carousel,drake=T}
  tags$div(class="carousel",
           tagList(
             generate_carousel_item(
@@ -116,8 +172,11 @@ validlink <- stringr::str_replace(imglink,
                 src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg"
               )
             ),
-            tags$div(class="carousel-item", Academia_card)
-            )
+            tags$div(class="carousel-item", slideup_academia_card),
+            tags$div(class="carousel-item", slideup_card),
+            ),
+          tags$div(class="carousel-item", activity_card)
+          
 )
   
 ```
