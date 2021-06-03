@@ -31,23 +31,34 @@ tag_sass <- tags$style(
 
 ```{r buses} 
 tagList(
-  tags$div(
-  class="valign-wrapper",
-  tags$i(class="material-icons","directions_bus"), "916"
-),
-tags$div(
-  class="valign-wrapper less5mins",
-  tags$a(class="btn-floating pulse red",
-       tags$i(class="material-icons","directions_bus")),
- "916"),
-tags$div(
-  class="valign-wrapper between5and10",
-  tags$i(class="material-icons","directions_bus"), "916"
-),
-tags$div(
-  class="valign-wrapper more10mins",
-  tags$i(class="material-icons","directions_bus"), "916"
-)
+  tags$div(class="container", 
+        tags$div(class="row", 
+            tags$div(class="valign-wrapper", id="route932-1", 
+                tags$a(class="", id="route932-2", 
+                    tags$i(class="material-icons"," directions_bus")
+                ),
+                932
+            ),
+            tags$div(class="valign-wrapper ", id="route916-1", 
+                tags$a(class="", id="route916-2", 
+                    tags$i(class="material-icons"," directions_bus")
+                ),
+                916
+            ),
+            tags$div(class="valign-wrapper", id="route939-1", 
+                tags$a(class="", id="route939-2", 
+                    tags$i(class="material-icons "," directions_bus")
+                ),
+                939
+            ),
+            tags$div(class="valign-wrapper", id="route941-1", 
+                tags$a(class="", id="route941-2", 
+                    tags$i(class="material-icons"," directions_bus")
+                ),
+                941
+            )
+        )
+    )
 )
 
 
@@ -111,7 +122,7 @@ bodyTags <- {
     tags$div(class="container",
              tags$div(class="row",
                       buses,
-                      exampleSVG
+                      busJs
                       )),
     tag_sass,
     busJs,
