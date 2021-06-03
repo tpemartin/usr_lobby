@@ -1,5 +1,5 @@
 ---
-drake_cache: ".lobby_main"
+drake_cache: ".carousel"
 ---
 
 ## Materialise Framework
@@ -27,6 +27,119 @@ web$html_filename <- "carousel.html"
 # source("R/scriptTest.R")
 ```
 
+
+### carousel
+
+```{r card_reveal}
+card_reveal <- {
+  tags$div(class="card", 
+           tags$div(class="card-image waves-effect waves-block waves-light", 
+                    tags$img(class="activator", src="https://materializecss.github.io/materialize/images/office.jpg")
+           ),
+           tags$div(class="card-content", 
+                    tags$span(class="card-title activator grey-text text-darken-4", "Card Title", tags$i(class="material-icons right","more_vert")),
+                    tags$p( tags$a(href="#"," This is a link"))
+           ),
+           tags$div(class="card-reveal", 
+                    tags$span(class="card-title grey-text text-darken-4", "Card Title", tags$i(class="material-icons right","close")),
+                    tags$p( "Here is some more information about this product that is only revealed once clicked on.")
+           )
+  )
+}
+```
+
+```{r carousel, drake=F}
+ tags$div(class="carousel",
+    tags$a(class="carousel-item", href="#one!", 
+           card1
+           ),
+    tags$a(class="carousel-item", href="#two!", 
+           poster_toy),
+    tags$a(class="carousel-item", href="#three!",
+          tags$img(
+            class="responsive-img",
+            src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg"
+      )
+    )
+)
+  
+```
+
+```{r}
+imglink <- "https://www.dropbox.com/s/vlhvqdw4w0b0oq4/KDFRc36.jpg?dl=0"
+econR::parse_dropboxlink(imglink)
+```
+
+```{r carousel, drake=T}
+ tags$div(class="carousel",
+          tagList(
+            generate_carousel_item(
+              href="#one!", 
+              cardHolder(
+                img_src="https://dl.dropboxusercontent.com/s/vlhvqdw4w0b0oq4/KDFRc36.jpg?dl=0")
+            ),
+            generate_carousel_item(
+              href="#two!", 
+              poster_toy
+            ),
+            generate_carousel_item(
+              href="#three!",
+              tags$img(
+                class="responsive-img",
+                src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg"
+              )
+            )
+          )
+)
+  
+```
+
+```{r}
+generate_carousel_item(href="#toycard", card4)
+```
+
+
+```{r pack_carousel_items}
+pack_carousel_items <- function(...){
+  list_args <- list(...)
+  do.call(
+    htmltools::tagList, list(...)
+  )
+}
+```
+
+```{r generate_carousel_item}
+generate_carousel_item <- function(href, ...){
+  tags$a(class="carousel-item", href=href,
+     htmltools::tagList(
+       ...
+     ))
+}
+
+```
+
+#### card4
+
+
+```{r card4, drake=F}
+card4 <- {
+  tags$div(class="card", 
+  tags$div(class="card-image", 
+    tags$img(src="https://i.imgur.com/KDFRc36.jpg"),
+    tags$span(class="card-title","  Card Title"),
+    # tags$a(class="btn-floating halfway-fab  waves-effect waves-light red",
+      tags$a(
+        class="halfway-fab",
+        tags$i(class="material-icons","  add")
+      )
+#    )
+  ),
+  tags$div(class="card-content", 
+    tags$p("  I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.")
+  )
+)
+}
+```
 
 ### Cardholder
 
@@ -72,6 +185,67 @@ cardHolder2 <- function(img_src){
 }
 ```
 
+#### card 1
+
+```{r card1}
+card1 <- tags$div(class="card large", 
+        tags$div(class="card-image", 
+          tags$img(src="https://materializecss.github.io/materialize/images/sample-1.jpg"),
+          tags$span(class="card-title"," Card Title")
+        ),
+        tags$div(class="card-content", 
+          tags$p( "I am a very simple card. I am good at containing small bits of information.
+          I am convenient because I require little markup to use effectively.")
+        )
+      )
+```
+
+```{r}
+htmltools::browsable(card1)
+```
+
+##### poster
+
+https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg
+
+```{r poster_toy, drake=T}
+tags$div(
+  tags$img(
+    class="responsive-img",
+  src="https://cms.carrier.ntpu.edu.tw/uploads/1_c1d4a362b5.jpeg"
+  )
+)
+
+```
+
+
+```{r}
+htmltools::browsable(poster_toy)
+```
+
+#### label
+
+```{r label_activity}
+label_activity <- tags$div("活動")
+```
+
+```{r}
+htmltools::browsable(label_activity)
+```
+
+
+
+### greenbtn
+
+```{r greenbtn}
+htmltools::tagList()
+```
+
+#### control_panel
+
+```{r control_panel}
+
+```
 
 ### floating btn
 
@@ -96,12 +270,6 @@ floatingBtn <- tags$div(class="fixed-action-btn",
 tags$div(class="video-container",
     tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/z7GFa9Idi-M", title="YouTube video player", frameborder="0", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen="")
     )
-```
-
-### Tim's design
-
-```{r tagSlides}
-tagSlides <- 
 ```
 
 
@@ -146,11 +314,15 @@ bodyTags <- {
                ),
                tags$div(
                  class="col s4",
-                 # slideupCard()
-                 tagSlides
+                 slideupCard()
+                 #carousel
                ),
                floatingBtn
              )
+             #floatingBtn
+             # tags$div(
+             #   class="row", greenbtn
+             # )
              )
   )
 }

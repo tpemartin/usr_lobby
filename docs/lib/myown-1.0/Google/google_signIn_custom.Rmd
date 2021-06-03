@@ -1,0 +1,179 @@
+---
+drake_cache: ".google_signIn_custom"
+---
+
+## Materialise Framework
+
+  * <https://materializecss.github.io/materialize/>
+
+## Setup environment
+
+  * Addins: Initiate drake -> `drake$source_plan()` -> `drake$makePlan()`.
+  
+  * `web$browse()` to see the output. 
+  
+  * If any change to Rmd or js/ and css/ folder, then `web$update()` -> `web$browse()` to see the change.
+  
+  * Your html output file is in `web$output_filepath()`.
+
+```{r makecondition}
+library(dplyr)
+library(htmltools)
+library(econR)
+.GlobalEnv$web <- econR::Web()
+web$foldername="docs" # output folder name
+web$html_filename <- "signin.html"
+
+```
+
+## Google SignIn
+
+### Dependency: Internal
+
+#### Head
+
+In head:
+```{r makecondition_root}
+.root <- rprojroot::is_rstudio_project$make_fix_file()
+```
+
+```{r dep_custom_signIn.js}
+dep_custom_signIn.js <- 
+  htmltools::htmlDependency(
+    name="head",
+    version="1.0.0",
+    src=c(filepath=
+            file.path(.root(), "googleSignIn")),
+    script="custom_signIn.js"
+  )
+```
+
+#### Google
+
+```{r google}
+google <- 
+  list(
+    meta = tags$meta(name="google-signin-client_id", content="543220568418-kgkh418f7a6i6rl7k78taeh0cgm9tdkm.apps.googleusercontent.com"), # meta for head
+    script = tags$script(src="https://apis.google.com/js/platform.js?onload=renderButton", async=NA, defer=NA) # script for body end
+  )
+```
+
+
+### Button
+
+```{r signIn_btn}
+signIn_btn <- tags$div(id="my-signin2")
+```
+
+### Dependency
+
+
+## Body Tags
+
+```{r bodyTags}
+bodyTags <- {
+  htmltools::tagList(
+    tags$main(
+      tags$h5(class="center-align",
+      "Materialise with Plotly")
+    ),
+    tags$div(class="container",
+             tags$div(class="row",
+                      tags$div(class="col s12",
+                               signIn_btn)
+                      )),
+    google$script
+  )
+}
+```
+
+
+## HTML Structure
+
+```{r html_placeholder}
+html_placeholder <- tagList(
+  tags$head(
+    do.call(htmltools::tagList, headTags)
+  ),
+  tags$body(
+    do.call(htmltools::tagList, bodyTags)
+  )
+)
+```
+
+## Dependencies
+
+### Head Tags
+
+```{r headTags}
+headTags <- {
+  htmltools::tagList(
+    htmltools::tags$link(
+      href="https://fonts.googleapis.com/icon?family=Material+Icons",
+      rel="stylesheet"
+    ),
+    tags$meta(
+      name="viewport",
+      content="width=device-width, initial-scale=1.0"
+    ),
+    google$meta
+  )
+}
+```
+
+### Define dependency
+
+  * If src is in other path, use `web$config_cssJsPath("your_path")` in **makecondition** -- no need to change `web$cssJsPath` (it will change accordingly).
+
+
+```{r local_jquery}
+local_jquery <- 
+  htmltools::htmlDependency(
+    name="jquery",
+    version="3.5.1",
+    src=c(href = "lib/jquery-3.5.1"),
+    # to use the same library here must use href, not filepath; otherwise, the current jquery system will be removed.
+    script = c("jquery.min.js")
+  )
+```
+
+### Attach dependency
+
+
+```{r html_complete}
+html_complete <- 
+  htmltools::tagList(
+    html_placeholder,
+    web$htmlDependencies$materialise(),
+    web$htmlDependencies$jquery(), 
+    dep_custom_signIn.js
+  )
+```
+
+  * If not using jquery from htmlwidgets, replace `local_jquery` with `web$htmlDependencies$jquery()`
+
+
+## Save
+
+```{r save_html}
+htmltools::save_html(
+  html_complete, 
+  file = web$output_filepath(),
+  libdir="lib"
+)
+```
+
+## Browse
+
+```{r}
+web$browse()
+```
+
+
+
+
+
+## JS
+
+
+<!--JS end-->
