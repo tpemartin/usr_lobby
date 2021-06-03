@@ -97,6 +97,10 @@ tag_voteData <- tags$script(
 )
 ```
 
+```{r}
+web$htmlDependencies$jquery()
+```
+
 
 
 ### Body Tags
