@@ -18,25 +18,117 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="valign-wrapper">
-          <i class="material-icons">directions_bus</i>
-          916
+        <div class="container">
+          <div class="row">
+            <div class="valign-wrapper" id="route932-1">
+              <a class="" id="route932-2">
+                <i class="material-icons"> directions_bus</i>
+              </a>
+              932
+            </div>
+            <div class="valign-wrapper " id="route916-1">
+              <a class="" id="route916-2">
+                <i class="material-icons"> directions_bus</i>
+              </a>
+              916
+            </div>
+            <div class="valign-wrapper" id="route939-1">
+              <a class="" id="route939-2">
+                <i class="material-icons "> directions_bus</i>
+              </a>
+              939
+            </div>
+            <div class="valign-wrapper" id="route941-1">
+              <a class="" id="route941-2">
+                <i class="material-icons"> directions_bus</i>
+              </a>
+              941
+            </div>
+          </div>
         </div>
-        <div class="valign-wrapper less5mins">
-          <a class="btn-floating pulse red">
-            <i class="material-icons">directions_bus</i>
-          </a>
-          916
-        </div>
-        <div class="valign-wrapper between5and10">
-          <i class="material-icons">directions_bus</i>
-          916
-        </div>
-        <div class="valign-wrapper more10mins">
-          <i class="material-icons">directions_bus</i>
-          916
-        </div>
-        <img src="lib/images-1.0/example.svg"/>
+        <script>$(function() {
+    setInterval(function() {
+        update_bus_data('916','15');
+        update_bus_data('932','86');
+        update_bus_data('941','1');
+        update_bus_data('939','45');
+    }, 10000);
+});
+
+function update_bus_data(busNumber,stopnumber) {
+    $.ajax({
+        type: 'GET',
+        url: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/' + busNumber + '?$format=JSON',
+        dataType: 'json',
+        headers: GetAuthorizationHeader(),
+        success: function(Data) {
+            bus_data = Data;
+            console.log(bus_data[stopnumber]["EstimateTime"]);
+            //console.log(bus_data)
+        }
+    });
+    
+    if(busNumber=='939'){
+        var arrtivetime = bus_data[stopnumber]["EstimateTime"]+120
+    }
+    else{
+        var arrtivetime = bus_data[stopnumber]["EstimateTime"]
+    }
+    
+
+    if (arrtivetime != NaN|undefined) {
+        if (arrtivetime < 300) {
+            $('#route' + busNumber + '-1').addClass("less5mins")
+            $('#route' + busNumber + '-2').addClass("btn-floating pulse red")
+        } else if (300 <= arrtivetime < 600) {
+            $('#route' + busNumber + '-1').addClass("between5and10")
+            $('#route' + busNumber + '-2').removeClass("btn-floating pulse red")
+            $('#route' + busNumber + '-2').addClass("between5and10")
+
+        } else if (arrtivetime > 600) {
+            $('#route' + busNumber + '-1').addClass("more10mins")
+            $('#route' + busNumber + '-2').removeClass("btn-floating pulse red")
+            $('#route' + busNumber + '-2').addClass("more10mins")
+        } else {
+            $('#route' + busNumber + '-1').hide()
+            $('#route' + busNumber + '-2').hide()
+        }
+
+    } else {
+        $('#route' + busNumber + '-1').hide()
+        $('#route' + busNumber + '-2').hide()
+
+    }
+
+
+}
+
+function GetAuthorizationHeader() {
+    var AppID = 'dbd38d180a7242289c973cd964e9ac77';
+    var AppKey = 'AFjVp5I0XeCgDPjSCmkAsOxo6zE';
+
+    var GMTString = new Date().toGMTString();
+    var ShaObj = new jsSHA('SHA-1', 'TEXT');
+    ShaObj.setHMACKey(AppKey, 'TEXT');
+    ShaObj.update('x-date: ' + GMTString);
+    var HMAC = ShaObj.getHMAC('B64');
+    var Authorization = 'hmac username=\"' + AppID + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
+
+    return {
+        'Authorization': Authorization,
+        'X-Date': GMTString /*,'Accept-Encoding': 'gzip'*/
+    }; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
+}
+
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {
+        type: contentType
+    });
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}</script>
       </div>
     </div>
     <style>a {
@@ -47,29 +139,66 @@ button {
   background-color: salmon;
 }
 </style>
-    <script>$(function () {
-    setInterval(function(){ 
-        update_bus_data('916');
-         }, 30000);
+    <script>$(function() {
+    setInterval(function() {
+        update_bus_data('916','15');
+        update_bus_data('932','86');
+        update_bus_data('941','1');
+        update_bus_data('939','45');
+    }, 10000);
 });
 
-function update_bus_data(busNumber){
+function update_bus_data(busNumber,stopnumber) {
     $.ajax({
         type: 'GET',
-        url: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/'+busNumber+'?$top=30&$format=JSON', 
+        url: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/' + busNumber + '?$format=JSON',
         dataType: 'json',
         headers: GetAuthorizationHeader(),
-        success: function (Data) {
+        success: function(Data) {
             bus_data = Data;
-            console.log(bus_data[15]["EstimateTime"]);
+            console.log(bus_data[stopnumber]["EstimateTime"]);
             //console.log(bus_data)
         }
     });
+    
+    if(busNumber=='939'){
+        var arrtivetime = bus_data[stopnumber]["EstimateTime"]+120
+    }
+    else{
+        var arrtivetime = bus_data[stopnumber]["EstimateTime"]
+    }
+    
+
+    if (arrtivetime != NaN|undefined) {
+        if (arrtivetime < 300) {
+            $('#route' + busNumber + '-1').addClass("less5mins")
+            $('#route' + busNumber + '-2').addClass("btn-floating pulse red")
+        } else if (300 <= arrtivetime < 600) {
+            $('#route' + busNumber + '-1').addClass("between5and10")
+            $('#route' + busNumber + '-2').removeClass("btn-floating pulse red")
+            $('#route' + busNumber + '-2').addClass("between5and10")
+
+        } else if (arrtivetime > 600) {
+            $('#route' + busNumber + '-1').addClass("more10mins")
+            $('#route' + busNumber + '-2').removeClass("btn-floating pulse red")
+            $('#route' + busNumber + '-2').addClass("more10mins")
+        } else {
+            $('#route' + busNumber + '-1').hide()
+            $('#route' + busNumber + '-2').hide()
+        }
+
+    } else {
+        $('#route' + busNumber + '-1').hide()
+        $('#route' + busNumber + '-2').hide()
+
+    }
+
+
 }
 
 function GetAuthorizationHeader() {
-    var AppID = '79b0ba94a5714d5f9ea84d55c41c5d1f';
-    var AppKey = 'VV503EXrrDt7yHypO6qP8h0ILmo';
+    var AppID = 'dbd38d180a7242289c973cd964e9ac77';
+    var AppKey = 'AFjVp5I0XeCgDPjSCmkAsOxo6zE';
 
     var GMTString = new Date().toGMTString();
     var ShaObj = new jsSHA('SHA-1', 'TEXT');
@@ -78,12 +207,17 @@ function GetAuthorizationHeader() {
     var HMAC = ShaObj.getHMAC('B64');
     var Authorization = 'hmac username=\"' + AppID + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
 
-    return { 'Authorization': Authorization, 'X-Date': GMTString /*,'Accept-Encoding': 'gzip'*/}; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
+    return {
+        'Authorization': Authorization,
+        'X-Date': GMTString /*,'Accept-Encoding': 'gzip'*/
+    }; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
 }
 
 function download(content, fileName, contentType) {
     var a = document.createElement("a");
-    var file = new Blob([content], {type: contentType});
+    var file = new Blob([content], {
+        type: contentType
+    });
     a.href = URL.createObjectURL(file);
     a.download = fileName;
     a.click();
