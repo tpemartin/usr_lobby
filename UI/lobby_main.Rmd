@@ -98,10 +98,27 @@ tags$div(class="video-container",
     )
 ```
 
-### Tim's design
+### Tim's design Slider
 
 ```{r tagSlides}
-tagSlides <- 
+tagSlides <- tagList(
+  tags$div(id="slider")
+)
+```
+
+### seminar
+
+```{r tagSeminar}
+tagSeminar <- tagList(
+  tags$div(id="seminar")
+)
+```
+
+### bus
+
+```{r tagBus}
+tagBus <- tagList()
+
 ```
 
 
@@ -142,12 +159,14 @@ bodyTags <- {
                class="row", 
                tags$div(
                  class="col s8",
-                 video
+                 video,
+                 tagBus
                ),
                tags$div(
                  class="col s4",
                  # slideupCard()
-                 tagSlides
+                 tagSlides,
+                 tagSeminar
                ),
                floatingBtn
              )
@@ -197,7 +216,7 @@ myDependency <- htmltools::htmlDependency(
   version="1.0",
   src=c(filepath=web$cssJsPath),
   stylesheet = "css/mystyle.css",
-  script = "js/mydesign.js",
+  script = c("js/mydesign.js","js/alternate_divs.js"),
   head = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
 '
 )
