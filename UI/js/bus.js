@@ -1,4 +1,4 @@
-$(function () {
+$(function update_bus_data(busNumber, stopnumber) {
     $.ajax({
         type: 'GET',
         url: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/916?$top=30&$format=JSON', 
@@ -6,14 +6,41 @@ $(function () {
         headers: GetAuthorizationHeader(),
         success: function (Data) {
             bus_data = Data;
-            console.log(bus_data)
+            direct = bus_data[stopnumber]["Direction"];
+            start = bus_data[stopnumber]["StopStatus"];
+            console.log(bus_data[stopnumber]["EstimateTime"]);
+            
+            if (busNumber == '939') {
+                arrivetime = parseInt(bus_data[stopnumber]["EstimateTime"]) + 120
+            } else {
+                arrivetime = bus_data[stopnumber]["EstimateTime"]
+            };
+            
+            
+            if (direct == 0 && start == 0 || start == 1) {
+
+                if (parseInt(arrivetime) <= 300) {
+                    $('#route' + busNumber + '-1').addClass("less5mins").removeClass("between5and10 more10mins")
+                    $('#route' + busNumber + '-2').addClass("btn-floating pulse red").removeClass("between5and10 more10mins")
+                } else if (300 < parseInt(arrivetime) && parseInt(arrivetime) <= 600) {
+                    $('#route' + busNumber + '-1').addClass("between5and10").removeClass("less5mins more10mins")
+                    $('#route' + busNumber + '-2').addClass("between5and10").removeClass("btn-floating pulse red more10mins")
+
+                } else {
+                    $('#route' + busNumber + '-1').addClass("more10mins").removeClass("between5and10 less5mins")
+                    $('#route' + busNumber + '-2').addClass("more10mins").removeClass("btn-floating pulse red between5and10")
+                }
+            } else {
+                $('#route' + busNumber + '-1').hide()
+                $('#route' + busNumber + '-2').hide()
+            }
         }
     });
 });
 
 function GetAuthorizationHeader() {
-    var AppID = '79b0ba94a5714d5f9ea84d55c41c5d1f';
-    var AppKey = 'VV503EXrrDt7yHypO6qP8h0ILmo';
+    var AppID = 'dbd38d180a7242289c973cd964e9ac77';
+    var AppKey = 'AFjVp5I0XeCgDPjSCmkAsOxo6zE';
 
     var GMTString = new Date().toGMTString();
     var ShaObj = new jsSHA('SHA-1', 'TEXT');
