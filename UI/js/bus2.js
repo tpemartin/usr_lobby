@@ -1,5 +1,4 @@
 $(function() {
-<<<<<<< Updated upstream
     setTimeout(function() {
         update_bus_data('916', '15');
         update_bus_data('932', '86');
