@@ -1,0 +1,160 @@
+---
+drake_cache: ".google_signIn"
+---
+
+```{r makecondition}
+library(dplyr)
+library(htmltools)
+library(econR)
+.root <- rprojroot::is_rstudio_project$make_fix_file()
+
+.GlobalEnv$web <- econR::Web()
+web$foldername="docs" # output folder name
+web$html_filename <- "signin.html"
+
+```
+
+## Google SignIn
+
+### External Dependency
+  
+```{r dep_googlePlatformJs, drake=F}
+dep_googlePlatformJs <-
+  htmltools::htmlDependency(
+    name="googleapi",
+    version="1.0.0",
+    src=c(""),
+    head="<script async defer src=\"https://apis.google.com/js/platform.js\">
+    </script>
+    <meta name=\"google-signin-client_id\" content=\"543220568418-kgkh418f7a6i6rl7k78taeh0cgm9tdkm.apps.googleusercontent.com\">")
+```
+
+```{r dep_googlePlatformJs}
+dep_googlePlatformJs <-
+  htmltools::htmlDependency(
+    name="googleapi",
+    version="1.0.0",
+    src=c(href="https://apis.google.com/js"),
+    script="platform.js",
+    head="<meta name=\"google-signin-client_id\" content=\"543220568418-kgkh418f7a6i6rl7k78taeh0cgm9tdkm.apps.googleusercontent.com\">")
+```
+
+
+
+### Internal Dependency
+
+```{r dep_google_signInJs}
+dep_google_signInJs <-
+  htmltools::htmlDependency(
+    name="signIn",
+    version="1.0.0",
+    src = c(
+      filepath=file.path(.root(),"googleSignIn")
+    ),
+    script = "signIn.js"
+  )
+
+```
+
+### Button
+
+```{r tag_signIn}
+tag_signIn <- tags$div(
+  class="g-signin2", `data-onsuccess`="onSignIn"
+)
+```
+
+
+## Body Tags
+
+```{r bodyTags}
+bodyTags <- {
+  htmltools::tagList(
+    tags$main(
+      tags$h5(class="center-align",
+      "Google Sing In")
+    ),
+    tags$div(class="container",
+             tags$div(class="row",
+                      tags$div(class="col s12",
+                               tag_signIn)
+                      ))
+  )
+}
+```
+
+
+## HTML Structure
+
+```{r html_placeholder}
+html_placeholder <- tagList(
+  tags$head(
+    do.call(htmltools::tagList, headTags),
+    tags$meta(
+      name="viewport",
+      content="width=device-width, initial-scale=1.0"
+    )
+  ),
+  tags$body(
+    do.call(htmltools::tagList, bodyTags)
+  )
+)
+```
+
+## Dependencies
+
+### Head Tags
+
+```{r headTags}
+headTags <- {
+  htmltools::tagList(
+    htmltools::tags$link(
+      href="https://fonts.googleapis.com/icon?family=Material+Icons",
+      rel="stylesheet"
+    )
+  )
+}
+```
+
+
+### Attach dependency
+
+
+```{r html_complete}
+html_complete <- 
+  htmltools::tagList(
+    html_placeholder,
+    web$htmlDependencies$materialise(),
+    web$htmlDependencies$jquery(), 
+    dep_google_signInJs,
+    dep_googlePlatformJs
+  )
+```
+
+  * If not using jquery from htmlwidgets, replace `local_jquery` with `web$htmlDependencies$jquery()`
+
+
+## Save
+
+```{r save_html}
+htmltools::save_html(
+  html_complete, 
+  file = web$output_filepath(),
+  libdir="lib"
+)
+```
+
+## Browse
+
+```{r}
+web$browse()
+```
+
+
+
+
+
+## JS
+
+
+<!--JS end-->

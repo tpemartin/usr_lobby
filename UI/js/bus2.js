@@ -15,33 +15,33 @@
 
         });
 
-        function update_bus_data(busNumber, stopnumber) {
-            $.ajax({
-                type: 'GET',
-                url: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/' + busNumber + '?$format=JSON',
-                dataType: 'json',
-                headers: GetAuthorizationHeader(),
-                success: function(Data) {
-                    bus_data = Data;
-                    direct = bus_data[stopnumber]["Direction"];
-                    start = bus_data[stopnumber]["StopStatus"];
-                    console.log(bus_data[stopnumber]["EstimateTime"]);
+function update_bus_data(busNumber, stopnumber) {
+    $.ajax({
+        type: 'GET',
+        url: 'https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/NewTaipei/' + busNumber + '?$format=JSON',
+        dataType: 'json',
+        headers: GetAuthorizationHeader(),
+        success: function(Data) {
+            bus_data = Data;
+            direct = bus_data[stopnumber]["Direction"];
+            start = bus_data[stopnumber]["StopStatus"];
+            console.log(bus_data[stopnumber]["EstimateTime"]);
 
 
-                    if (busNumber == '939') {
-                        arrivetime = parseInt(bus_data[stopnumber]["EstimateTime"]) + 120
-                    } else {
-                        arrivetime = bus_data[stopnumber]["EstimateTime"]
-                    };
+            if (busNumber == '939') {
+                arrivetime = parseInt(bus_data[stopnumber]["EstimateTime"]) + 120
+            } else {
+                arrivetime = bus_data[stopnumber]["EstimateTime"]
+            };
 
 
-                    //console.log(bus_data)
-                }
-            })
+            //console.log(bus_data)
+        }
+    })
+}
 
 
-
-            function GetAuthorizationHeader() {
+function GetAuthorizationHeader() {
                 var AppID = 'dbd38d180a7242289c973cd964e9ac77';
                 var AppKey = 'AFjVp5I0XeCgDPjSCmkAsOxo6zE';
 
@@ -58,7 +58,7 @@
                 }; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
             }
 
-            function download(content, fileName, contentType) {
+function download(content, fileName, contentType) {
                 var a = document.createElement("a");
                 var file = new Blob([content], {
                     type: contentType

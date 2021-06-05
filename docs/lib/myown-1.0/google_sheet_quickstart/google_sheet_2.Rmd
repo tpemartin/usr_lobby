@@ -1,0 +1,190 @@
+---
+drake_cache: ".sheets2"
+---
+
+  * <https://developers.google.com/sheets/api/quickstart/js>
+  
+```{r}
+browseURL("https://developers.google.com/sheets/api/quickstart/js")
+```
+
+
+```{r makecondition}
+library(dplyr)
+library(htmltools)
+library(econR)
+.root <- rprojroot::is_rstudio_project$make_fix_file()
+.GlobalEnv$web <- econR::Web()
+web$foldername="docs" # output folder name
+web$html_filename <- "sheet_2.html"
+
+```
+
+## Google Sheet
+
+### Dependency: Internal
+
+```{r google}
+google <- list()
+google$signIn <- list()
+google$signIn$dependency <-
+  htmltools::htmlDependency(
+    name="google_signIn",
+    version="1.0.0",
+    src=c(href="https://apis.google.com"),
+    script=list(
+      src="js/api.js",
+      async="",
+      deter="",
+      onload="this.onload=function(){};handleClientLoad()",
+      onreadystatechange="if (this.readyState === 'complete') this.onload()"
+    )
+  )
+google$sheets <- list()
+google$sheets$dependency <-
+  htmltools::htmlDependency(
+    name="sheets",
+    version="1.0.0",
+    src=c(filepath=file.path(.root(), "lib")),
+    script = "js/googleSheets.js")
+google
+```
+
+### retrieve data
+
+```{js retrieveSheetData}
+gapi.client.sheets.spreadsheets.values.get({
+  spreadsheetId: "1Ampe6kDzKomv4-YlOW0HZwxlUyCVZygQMg_1F3pn4Io",
+  range: "海報!A1:I49"
+}).then((response) => {
+  var result = response.result;
+  var numRows = result.values ? result.values.length : 0;
+  console.log(`${numRows} rows retrieved.`);
+});
+```
+
+### Button
+
+```{r signInBtn}
+signInBtn <- tagList(
+  tags$button(id="authorize_button", style="display: none;"," Authorize"),
+  tags$button(id="signout_button", style="display: none;"," Sign Out")
+)
+
+```
+
+
+```{r signInBtn_dependency}
+signInBtn_dependency <- 
+  attachDependencies(signInBtn, google$signIn$dependency, append=T)
+```
+
+## Body Tags
+
+```{r bodyTags}
+bodyTags <- {
+  htmltools::tagList(
+    tags$main(
+      tags$h5(class="center-align",
+      "Google Sheets API Quickstart")
+    ),
+    tags$div(class="container",
+             tags$div(class="row",
+                      tags$div(class="col s12",
+                               signInBtn_dependency,
+                               tags$pre(
+                                 id="content", 
+                                 style="white-space: pre-wrap;",
+                                 " "))
+                      ))
+  )
+}
+```
+
+
+## HTML Structure
+
+```{r html_placeholder}
+html_placeholder <- tagList(
+  tags$head(
+    do.call(htmltools::tagList, headTags)
+  ),
+  tags$body(
+    do.call(htmltools::tagList, bodyTags)
+  )
+)
+```
+
+## Dependencies
+
+### Head Tags
+
+```{r headTags}
+headTags <- {
+  htmltools::tagList(
+    htmltools::tags$link(
+      href="https://fonts.googleapis.com/icon?family=Material+Icons",
+      rel="stylesheet"
+    ),
+    tags$meta(
+      name="viewport",
+      content="width=device-width, initial-scale=1.0"
+    )
+  )
+}
+```
+
+### Define dependency
+
+  * If src is in other path, use `web$config_cssJsPath("your_path")` in **makecondition** -- no need to change `web$cssJsPath` (it will change accordingly).
+
+### Attach dependency
+
+
+```{r html_complete}
+html_complete <- 
+  htmltools::tagList(
+    web$htmlDependencies$jquery(),
+    web$htmlDependencies$materialise(),
+    html_placeholder,
+    google$sheets
+  )
+```
+
+
+
+## Save
+
+```{r save_html}
+htmltools::save_html(
+  html_complete, 
+  file = web$output_filepath(),
+  libdir="lib"
+)
+```
+
+## Browse
+
+```{r}
+web$browse()
+```
+
+
+
+
+
+## JS
+
+```{r retrieveSheetData}
+retrieveSheetData <- "
+gapi.client.sheets.spreadsheets.values.get({
+  spreadsheetId: \"1Ampe6kDzKomv4-YlOW0HZwxlUyCVZygQMg_1F3pn4Io\",
+  range: \"海報!A1:I49\"
+}).then((response) => {
+  var result = response.result;
+  var numRows = result.values ? result.values.length : 0;
+  console.log(`${numRows} rows retrieved.`);
+});
+"
+```
+<!--JS end-->
