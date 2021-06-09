@@ -141,6 +141,86 @@ Academia_card <- tagList(
 )
 ```
 
+### slider
+```{r slider}
+tagList(
+  tags$div(
+    class= "slideshow-container",
+    slider_content,
+    slider_content2,
+    slider_content,
+    next_prev_btn
+  ),
+  slider_dots
+)
+
+```
+
+#### slider_content
+
+```{r slider_content}
+
+slider_content <- tagList(
+  tags$div(class="mySlides fade", 
+    tags$div(class="numbertext"," 1 / 3"),
+    tags$img(src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg", style="width:100%"),
+    tags$div(class="text"," Caption Text")
+    )
+)
+
+```
+
+
+```{r slider_content2}
+
+slider_content2 <- tagList(
+  tags$div(class="mySlides fade", 
+    tags$div(class="numbertext"," 1 / 3"),
+    tags$img(src="https://i.imgur.com/KDFRc36.jpg", style="width:100%"),
+    tags$div(class="text"," Caption Text")
+    )
+)
+
+```
+#### next_prev_btn
+
+
+```{r next_prev_btn}
+next_prev_btn <- tagList(
+  tags$a(class="prev", onclick="plusSlides(-1)","&#10094;"),
+  tags$a(class="next", onclick="plusSlides(1)","&#10095;")
+)
+```
+
+
+#### slider_dots
+
+```{r slider_dots}
+slider_dots <- tagList(
+  tags$div(
+    style="text-align:center",
+    tags$span(
+      class="dot",
+      onclick="currentSlide(1)"
+    ),
+    tags$span(
+      class="dot",
+      onclick="currentSlide(2)"
+    ),
+    tags$span(
+      class="dot",
+      onclick="currentSlide(3)"
+    )
+  )
+)
+```
+
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+
 ### carousel
 
 
