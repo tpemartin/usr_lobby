@@ -33,21 +33,24 @@ library(crosstalk)
 library(plotly)
 ```
 
+### Share data
 
 ```{r txhousing_shared}
-txhousing_shared <- SharedData$new(txhousing)
+txhousing_shared <- crosstalk::SharedData$new(txhousing)
 ```
+
+### Control panel
 
 ```{r widgets_control}
 widgets_control <- 
   withTags(
     div(class="row",
       div(class="col s12",
-          filter_select("city", "Cities", txhousing_shared, ~city)),
+          crosstalk::filter_select("city", "Cities", txhousing_shared, ~city)),
       div(class="col s12",
-          filter_slider("sales", "Sales", txhousing_shared, ~sales)),
+          crosstalk::filter_slider("sales", "Sales", txhousing_shared, ~sales)),
       div(class="col s12",
-          filter_checkbox("year", "Years", txhousing_shared, ~year, inline = FALSE))
+          crosstalk::filter_checkbox("year", "Years", txhousing_shared, ~year, inline = FALSE))
     )
   )
 ```
