@@ -28,6 +28,20 @@ web$html_filename <- "index.html"
 
 ### slider
 
+```{r slider}
+
+slider <- tagList(
+      tags$div(class="slideshow-container",  
+         tags$div(class="slider-inner-container", 
+            Academia_card,
+            slider_content1,
+            slider_content2
+         ),
+         controls
+      )
+)
+
+```
 
 ```{r slider,drake=F}
 
@@ -44,28 +58,16 @@ slider <- tagList(
 
 ```
 
-```{r next_prev_btn}
-next_prev_btn <- tagList(
-  tags$div(
-    class="prev", 
-    tags$i(
-      class="small material-icons",
-      "arrow_back"
-    )
-         ),
-  tags$div(
-    class="next", 
-    tags$i(
-      class="small material-icons",
-      "arrow_forward"
-    ))
-)
-```
 
+### slider_content
+
+
+
+#### 研之有物
 ```{r Academia_card}
 Academia_card <- tagList(
   tags$div(class="mySlides active fade academia_border", #card底圖
-    tags$img(class="card_row card_pic",src="https://research.sinica.edu.tw/wp-content/uploads/2020/11/logo.png"),
+    tags$img(class="card_row  card_pic",src="https://research.sinica.edu.tw/wp-content/uploads/2020/11/logo.png"), #研之有物 logo
     tags$div(class="card_title_subtitle",
       tags$div(class="card_row card_title",id="aca_title","和爸媽吵架是不孝嗎？心理學家剖析青少年親子衝突的內心小劇場"),
     tags$div(class="card_row card_subtitle",id="aca_subtitle","青少年的親子衝突研究")
@@ -92,6 +94,7 @@ Academia_card <- tagList(
 )
 ```
 
+#### 活動海報
 ```{r slider_content1,drake=T}
 
 slider_content1 <- tagList(
@@ -113,6 +116,7 @@ slider_content2 <- tagList(
 
 ```
 
+#### manual_control_btn
 ```{r controls}
 controls <- tagList(
   tags$div(class="controls", 
@@ -133,20 +137,7 @@ controls <- tagList(
 
 ```
 
-```{r slider}
 
-slider <- tagList(
-      tags$div(class="slideshow-container",  
-         tags$div(class="slider-inner-container", 
-            Academia_card,
-            slider_content1,
-            slider_content2
-         ),
-         controls
-      )
-)
-
-```
 
 ```{r slider_content1,drake=F}
 slider_content1 <- tagList(
