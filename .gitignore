@@ -37,3 +37,4 @@ rsconnect/
 UI/.carousel/**
 # drake cache starting with .
 **/\.*
+docs/lib/myown-1.0/lifeInfo.Rmd
