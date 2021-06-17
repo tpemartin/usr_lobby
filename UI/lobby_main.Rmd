@@ -122,7 +122,36 @@ tagSeminar <- tagList(
 ### bus
 
 ```{r tagBus}
-tagBus <- tagList()
+tagBus <- tagList(
+  tags$div(class="container", 
+        tags$div(class="row", 
+            tags$div(class="valign-wrapper", id="route932-1", 
+                tags$a(class="", id="route932-2", 
+                    tags$i(class="material-icons"," directions_bus")
+                ),
+                932
+            ),
+            tags$div(class="valign-wrapper ", id="route916-1", 
+                tags$a(class="", id="route916-2", 
+                    tags$i(class="material-icons"," directions_bus")
+                ),
+                916
+            ),
+            tags$div(class="valign-wrapper", id="route939-1", 
+                tags$a(class="", id="route939-2", 
+                    tags$i(class="material-icons "," directions_bus")
+                ),
+                939
+            ),
+            tags$div(class="valign-wrapper", id="route941-1", 
+                tags$a(class="", id="route941-2", 
+                    tags$i(class="material-icons"," directions_bus")
+                ),
+                941
+            )
+        )
+    )
+)
 
 ```
 
@@ -289,7 +318,7 @@ myDependency <- htmltools::htmlDependency(
   version="1.0",
   src=c(filepath=web$cssJsPath),
   stylesheet = "css/mystyle.css",
-  script = c("js/mydesign.js","js/alternate_divs.js"),
+  script = c("js/mydesign.js","js/alternate_divs.js","js/bus2.js"),
   head = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
 '
 )
@@ -309,6 +338,19 @@ local_jquery <-
   )
 ```
 
+### SHA js
+
+```{r sha_js}
+sha_js <- 
+  htmltools::htmlDependency(
+    name="sha",
+    version="3.2.0",
+    src=c(href = "https://cdnjs.cloudflare.com"),
+    # to use the same library here must use href, not filepath; otherwise, the current jquery system will be removed.
+    script = c("ajax/libs/jsSHA/3.2.0/sha.min.js")
+  )
+```
+
 ### Attach dependency
 
 
@@ -318,8 +360,8 @@ html_complete <-
     html_placeholder,
     web$htmlDependencies$materialise(),
     local_jquery, 
-    myDependency#,
-    #dep_tim
+    myDependency,
+    sha_js
   )
 ```
 
