@@ -1,0 +1,60 @@
+---
+drake_cache: '.carousel'
+dependencies: 'dependencies'
+output:
+  html_tag:
+    filename: "carousel.html"
+    dirpath: "`r library(econR); . %//% 'docs'`"
+    object: "carousel"
+---
+
+```{r, drake=F}
+library(econR)
+rstudioapi::initializeProject(. %//% 'your_foldername') # to create .Rproj
+```
+
+
+```{r makecondition}
+library(econR)
+library(dplyr)
+library(htmltools)
+dependencyTemplate <- readRDS(
+  . %//% "dependencies.Rds"
+)
+```
+
+
+```{r dependencies}
+dependencies <- dependencyTemplate
+```
+
+# carousel
+
+```{r carousel}
+carousel <- tags$div(class="carousel carousel-slider center", 
+    tags$div(class="carousel-item red white-text", href="#one!", 
+      tags$h2(" First Panel"),
+      tags$p(class="white-text"," This is your first panel")
+    ),
+    tags$div(class="carousel-item amber white-text", href="#two!", 
+      tags$h2(" Second Panel"),
+      tags$p(class="white-text"," This is your second panel")
+    )
+  ) %>%
+  tagList(
+    ., 
+    tags$script("$carousel = $('.carousel.carousel-slider').carousel({
+    fullWidth: true,
+    indicators: true
+  });
+      $instance = M.Carousel.getInstance($carousel);")
+  )
+        
+```
+
+## JS
+
+
+<!--JS end-->
+
+

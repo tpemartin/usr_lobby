@@ -28,32 +28,6 @@ dependencies <- dependencyTemplate
 ```
 
 
-## Body 
-
-
-```{r layoutFun}
-layoutFun <- function(video, lifeInfo, slider){
-  div(class="row",
-    div(class="col s7 purple", 
-      div(class="purple", style="height: 500px",
-        video),
-      div(class="white",style="height: 300px",
-        lifeInfo)
-      ),
-    div(class="col s5 amber", style="height: 800px;",
-      slider)
-  )
-}
-```
-
-```{r layout}
-layout <- layoutFun(
-  tagList(), tagList(), tagList())
-```
-
-```{r save_result}
-saveRDS(layoutFun, file=. %//% "layout.Rds")
-```
 
 
 ## JS

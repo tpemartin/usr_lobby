@@ -1,0 +1,62 @@
+---
+drake_cache: '.dependencies'
+dependencies: 'dependencies'
+output:
+  html_tag:
+    filename: "dependencies.html"
+    dirpath: "`r library(econR); . %//% 'docs'`"
+    object: "dependencies"
+---
+
+```{r, drake=F}
+library(econR)
+rstudioapi::initializeProject(. %//% 'your_foldername') # to create .Rproj
+```
+
+
+```{r makecondition}
+library(econR)
+library(htmltools)
+
+```
+
+## Dependencies
+
+```{r dependencies}
+dependencies <- {
+  econRdependencies <- econR::html_dependencies()
+  
+  myDependencies <- htmltools::htmlDependency(
+    name="myown",
+    version="1.0.0",
+    src = c(file= . %//% "mainpage/assets"),
+    script = "js/myscript.js",
+    stylesheet = c("css/mystyle.css")
+    )
+  
+  timDependencies <- htmltools::htmlDependency(
+    name="tim",
+    version="1.0.0",
+    src=c(file=. %//% 'slider_test/assets'),
+    stylesheet = c("css/mystyle.css"),
+    script = c('js/mydesign.js')
+  )
+  
+  tagList(
+    econRdependencies$jquery(),
+    econRdependencies$materialise(),
+    myDependencies,
+    timDependencies
+  )
+}
+```
+
+```{r save_dependency}
+saveRDS(dependencies, file = . %//% "dependencies.Rds")
+```
+
+
+## JS
+
+
+<!--JS end-->
