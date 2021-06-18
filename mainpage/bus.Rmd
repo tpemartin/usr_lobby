@@ -1,0 +1,201 @@
+---
+drake_cache: '.bus'
+dependencies: 'main_dependencies'
+---
+
+```{r makecondition}
+library(econR)
+library(shiny)
+library(htmltools)
+```
+
+
+```{r main_dependencies, drake=F}
+main_dependencies <- readRDS(
+  . %//% "assets/dependencies/main_dependencies.Rds"
+)
+```
+
+```{r main_dependencies}
+main_dependencies <-{
+  dep_econR <- econR:::html_dependency()
+  
+  dep_mainFilepath <- 
+    . %//% 'assets'
+  dep_main <- htmltools::htmlDependency(
+    name="main",
+    version="1.0.0",
+    src=c(file=dep_mainFilepath),
+    stylesheet="css/main.css",
+    script="js/main.js"
+  )
+  tagList(dep_econR$jquery(), dep_econR$materialise(),  dep_main)
+}
+```
+
+## bus
+
+```{r buses}
+buses <- list(
+  small = tags$i(class="material-icons small", "directions_bus"),
+  medium = tags$i(class="material-icons medium", "directions_bus"),
+  large = tags$i(class="material-icons large", "directions_bus")
+)
+```
+
+```{r}
+bus1 <- htmltools::HTML(
+'    <div class="row">
+      
+      <div class="col s6 offset-s6"><span class="flow-text">6-columns (offset-by-6)</span></div>
+      <div class="col s6"><span class="flow-text">This div is 12-columns wide on all screen sizes</span></div>
+    </div>'
+)
+```
+
+```{r}
+ncol = 2
+height = "200px"
+experiment <- {
+  div(class="row valign-wrapper amber",
+    style=glue::glue("min-height: {height}"),
+    div(
+      class=glue::glue("col s{ncol} blue")
+    ),
+    div(
+      class=glue::glue("col s{12-ncol}")
+    ))
+}
+```
+
+
+```{r busInfo}
+size="small"
+busInfo <- function(size)
+{
+  tags$div(class="row valign-wrapper", 
+    style="max-height: 100px",
+            tags$div(class="col s1", 
+              tags$i(class=glue::glue("material-icons {size}"),"directions_bus")),
+            tags$div(class="col s2", 
+              tags$span(class=glue::glue("black-text {size} flow-text"), 
+                "917 916 939 917 916 939"
+              )
+            ),
+    tags$div(class="col s9")
+          )
+}  
+```
+
+```{r}
+bus1 <- busInfo("small")
+web$browsable(bus1, F)
+```
+
+
+```{r busInfo, drake=F}
+busInfo <- function(size){
+withTags(
+  span(
+    class=glue::glue("valign-wrapper {size}bus"),
+    i(class=glue::glue("material-icons {size}"),"directions_bus"), 
+    span(id=glue::glue("{size}bus-text"),"917 916 939 917 916 939")
+  )
+)
+}
+```
+
+917 916 939 917 916 939
+
+```{r bus}
+bus <- withTags(
+  div(class="row",div(class="col s2 offset-s10 pull-s10",
+    busInfo("small"),
+    busInfo("medium"),
+    busInfo("large")
+  ))
+)
+```
+
+
+```{r bus}
+div(class="row",
+      div(class="col s2",
+        busInfo("small"))),
+div(class="row",
+      div(class="col s2",
+        busInfo("medium"))),
+    div(class="row",
+      div(class="col s2",
+        busInfo("large"))),
+  )
+)
+```
+
+
+```{r bus}
+bus <- withTags(
+  div(class="bus-card",
+    div(class="row",
+      div(class="col s2",
+        busInfo("small"))),
+div(class="row",
+      div(class="col s2",
+        busInfo("medium"))),
+    div(class="row",
+      div(class="col s2",
+        busInfo("large"))),
+  )
+)
+```
+
+
+
+
+## layout
+
+```{r layout}
+layout <- withTags(
+  tagList(
+    head(
+    h2("1280 x 800")
+  ),
+  div(
+    class="row",
+    
+    div(
+      class="col s7",
+      div(
+        class="row",
+        div(
+         class="col s12 purple darken-2",
+         style="height: 500px"
+        ),
+        div(
+          class="col s12 blue lighten-3",
+          style="height: 300px", 
+          bus
+        )
+      )
+    ),
+    div(
+      class="col s5 amber",
+      div(
+        style="height: 800px"
+      )
+    )
+  )
+)
+  )
+  
+```
+
+
+
+
+
+
+## JS
+
+
+<!--JS end-->

@@ -1,0 +1,230 @@
+---
+drake_cache: ".lobby_main"
+dependencies: 'dependencies'
+output:
+  html_tag:
+    filename: "index.html"
+    dirpath: "`r library(econR); . %//% 'docs'`"
+    object: "html_placeholder"
+---
+
+
+```{r makecondition}
+library(dplyr)
+library(htmltools)
+library(econR)
+
+slider <- readRDS(
+  . %//% "mainpage/assets/ui/slider2.Rds"
+)
+```
+
+
+
+
+### floating btn
+
+```{r floatingBtn, drake=T}
+floatingBtn <- tags$div(class="fixed-action-btn", 
+  tags$a(class="btn-floating btn-large red", 
+    tags$i(class="large material-icons"," mode_edit")
+  ),
+  tags$ul( 
+    tags$li( tags$a(class="btn-floating red", tags$i(class="material-icons"," insert_chart"))),
+    tags$li( tags$a(class="btn-floating yellow darken-1", tags$i(class="material-icons"," format_quote"))),
+    tags$li( tags$a(class="btn-floating green", tags$i(class="material-icons"," publish"))),
+    tags$li( tags$a(class="btn-floating blue", tags$i(class="material-icons"," attach_file")))
+  )
+)
+      
+```
+
+### video
+
+```{r video, drake=T}
+tags$div(class="video-container",
+    tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/z7GFa9Idi-M", title="YouTube video player", frameborder="0", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen="")
+    )
+```
+
+
+### seminar
+
+
+### bus
+
+```{r tagBus, drake=T}
+tagBus <- tagList(
+  tags$div(class="container", 
+        tags$div(class="row", 
+            tags$div(class="valign-wrapper", id="route932_1", 
+                tags$a(class="", id="route932_2", 
+                    tags$i(class="material-icons"," directions_bus")
+                ),
+                932
+            ),
+            tags$div(class="valign-wrapper ", id="route916-1", 
+                tags$a(class="", id="route916-2", 
+                    tags$i(class="material-icons"," directions_bus")
+                ),
+                916
+            ),
+            tags$div(class="valign-wrapper", id="route939-1", 
+                tags$a(class="", id="route939-2", 
+                    tags$i(class="material-icons "," directions_bus")
+                ),
+                939
+            ),
+            tags$div(class="valign-wrapper", id="route941-1", 
+                tags$a(class="", id="route941-2", 
+                    tags$i(class="material-icons"," directions_bus")
+                ),
+                941
+            )
+        )
+    )
+)
+
+```
+
+  * <https://bookdown.org/tpemartin/ntpusoc_lobby/lobby_flexdashboard.html>
+  
+
+
+
+### Body Tags
+
+
+```{r bodyTags, drake=T}
+bodyTags <- {
+  htmltools::tagList(
+    tags$div(#class="container",
+             tags$div(
+               class="row", 
+               tags$div(
+                 class="col s8 relative",
+                 tags$div(
+                   class="absolute",
+                   video),
+                 tagBus
+               ),
+               tags$div(
+                 class="col s4",
+                 # slideupCard()
+                 # tagSlides,
+                 # tagSeminar,
+                 # switch
+                 slider
+               ),
+               floatingBtn
+             )
+             )
+  )
+}
+```
+
+
+## HTML Structure
+
+```{r html_placeholder, drake=T}
+html_placeholder <- tags$html(
+  tags$head(
+    do.call(htmltools::tagList, headTags),
+    tags$meta(
+      name="viewport",
+      content="width=device-width, initial-scale=1.0"
+    )
+  ),
+  tags$body(
+    do.call(htmltools::tagList, bodyTags)
+  )
+)
+```
+
+## Dependencies
+
+### Head Tags
+
+```{r headTags, drake=T}
+headTags <- {
+  htmltools::tagList(
+    htmltools::tags$link(
+      href="https://fonts.googleapis.com/icon?family=Material+Icons",
+      rel="stylesheet"
+    )
+  )
+}
+```
+
+### Define dependency
+
+```{r dep_tim}
+dep_tim <- htmltools::htmlDependency(
+  name="tim",
+  version="1.0.0",
+  src = c(
+    file= . %//% "slider_test/assets"
+  ),
+  stylesheet = "css/mystyle.css",
+  script = "js/mydesign.js"
+)
+
+dep_martin <- htmltools::htmlDependency(
+  name="martin",
+  version="1.0.0",
+  src=c(filepath= . %//% "mainpage/assets"),
+  stylesheet = c("css/mystyle.css","css/positions.css"),
+  script = c("js/mydesign.js","js/alternate_divs.js","js/bus2.js"),
+  head = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
+'
+)
+```
+
+  * If src is in other path, use `web$config_cssJsPath("your_path")` in **makecondition** -- no need to change `web$cssJsPath` (it will change accordingly).
+
+
+```{r local_jquery}
+local_jquery <- 
+  htmltools::htmlDependency(
+    name="jquery",
+    version="3.5.1",
+    src=c(href = "lib/jquery-3.5.1"),
+    # to use the same library here must use href, not filepath; otherwise, the current jquery system will be removed.
+    script = c("jquery.min.js")
+  )
+```
+
+### SHA js
+
+```{r sha_js}
+sha_js <- 
+  htmltools::htmlDependency(
+    name="sha",
+    version="3.2.0",
+    src=c(href = "https://cdnjs.cloudflare.com"),
+    # to use the same library here must use href, not filepath; otherwise, the current jquery system will be removed.
+    script = c("ajax/libs/jsSHA/3.2.0/sha.min.js")
+  )
+```
+
+### Attach dependency
+
+```{r dependencies}
+dependencies <- {
+  list_dependencies <- econR::html_dependencies()
+  tagList(
+    list_dependencies$jquery(),
+    list_dependencies$materialise(),
+    myDependency,
+    sha_js
+  ) %>%
+    setNames(c("jquery", "materialise", "myDependency", "sha"))
+}
+```
+
+
+
+## JS
+
+
+<!--JS end-->

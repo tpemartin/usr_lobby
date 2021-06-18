@@ -1,0 +1,101 @@
+---
+drake_cache: '.card'
+dependencies: 'dependencies'
+output:
+  html_tag:
+    filename: "card.html"
+    dirpath: "`r library(econR); . %//% 'docs'`"
+    object: "card"
+---
+
+```{r, drake=F}
+library(econR)
+rstudioapi::initializeProject(. %//% 'your_foldername') # to create .Rproj
+```
+
+
+```{r makecondition}
+library(econR)
+library(dplyr)
+library(htmltools)
+
+```
+
+## Dependencies
+
+```{r dependencies}
+dependencies <- {
+  econRdependencies <- econR::html_dependencies()
+  
+  myDependencies <- htmltools::htmlDependency(
+    name="myown",
+    version="1.0.0",
+    src = c(file= . %//% "mainpage/assets"),
+    script = "js/myscript.js",
+    stylesheet = c("css/mystyle.css")
+    )
+  
+  timDependencies <- htmltools::htmlDependency(
+    name="tim",
+    version="1.0.0",
+    src=c(file=. %//% 'slider_test/assets'),
+    stylesheet = c("css/mystyle.css")
+  )
+  tagList(
+    econRdependencies$jquery(),
+    econRdependencies$materialise(),
+    myDependencies,
+    timDependencies
+  )
+}
+```
+
+## Card
+
+```{r contentImage}
+contentImage <- 
+  tags$div(class="col s12 m8 offset-m2 l6 offset-l3", 
+        tags$div(class="card-panel grey lighten-5 z-depth-1", 
+          tags$div(class="row valign-wrapper", 
+            tags$div(class="col s6", 
+              tags$img(src="https://research.sinica.edu.tw/wp-content/uploads/2021/05/yeh-kuang-hui-01.jpeg", alt="", class="responsive-img")),
+            tags$div(class="col s6", 
+              tags$span(class="black-text", 
+                'his is a square image. Add the "circle", class to it to make it appear circular.'
+              ))
+          ))) %>%
+  {tags$div(class="row", .)}
+```
+
+```{r cardPanel}
+cardPanel <- tags$div(class="row valign-wrapper", 
+            tags$div(class="col s6", 
+              tags$img(src="https://research.sinica.edu.tw/wp-content/uploads/2021/05/yeh-kuang-hui-01.jpeg", alt="", class="responsive-img")),
+            tags$div(class="col s6", 
+              tags$span(class="black-text", 
+                "和爸媽吵架是不孝嗎？心理學家剖析青少年親子衝突的內心小劇場"
+              ))
+          )
+```
+
+
+
+```{r card}
+card <- tagList(
+  tags$div(class="row", 
+    tags$div(class="col s12 m7", 
+      tags$div(class="card academia_border", 
+        tags$div(class="card-image", 
+          tags$img(src="https://research.sinica.edu.tw/wp-content/uploads/2020/11/logo.png")),
+        tags$div(class="card-content", 
+          cardPanel
+        ),
+        tags$div(class="card-action", 
+          tags$a(href="#"," This is a link")
+        )
+      )
+    )
+  )
+)
+```
+

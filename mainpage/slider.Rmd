@@ -1,0 +1,139 @@
+---
+drake_cache: '.slider'
+dependencies: 'dependencies'
+output:
+  html_tag:
+    filename: "slider.html"
+    dirpath: "`r library(econR); . %//% 'docs'`"
+    object: "layout"
+---
+
+```{r, drake=F}
+library(econR)
+rstudioapi::initializeProject(. %//% 'your_foldername') # to create .Rproj
+```
+
+
+```{r makecondition}
+library(econR)
+library(dplyr)
+library(htmltools)
+
+```
+
+## Dependencies
+
+```{r dependencies}
+dependencies <- {
+  econRdependencies <- econR::html_dependencies()
+  
+  myDependencies <- htmltools::htmlDependency(
+    name="myown",
+    version="1.0.0",
+    src = c(file= . %//% "mainpage/assets"),
+    script = "js/myscript.js",
+    stylesheet = c("css/mystyle.css")
+    )
+  
+  timDependencies <- htmltools::htmlDependency(
+    name="tim",
+    version="1.0.0",
+    src=c(file=. %//% 'slider_test/assets'),
+    stylesheet = c("css/mystyle.css")
+  )
+  tagList(
+    econRdependencies$jquery(),
+    econRdependencies$materialise(),
+    myDependencies,
+    timDependencies
+  )
+}
+```
+
+## slider_singleton
+
+```{r slider_singleton}
+slider_singleton <- function(htmltag){
+  tags$div(class="carousel-item red white-text", style="padding: 20px 50px 65px 50px",
+      htmltag
+    )
+}
+  
+```
+
+### Academia
+
+```{r academia1}
+academia1 <- Academia_card()
+```
+
+```{r Academia_card}
+Academia_card <- function(){
+  tagList(
+  tags$div(class="fade academia_border", #card底圖
+    tags$img(class="card_row  card_pic",src="https://research.sinica.edu.tw/wp-content/uploads/2020/11/logo.png"), #研之有物 logo
+    tags$div(class="card_title_subtitle",
+      tags$div(class="card_row card_title",id="aca_title","和爸媽吵架是不孝嗎？心理學家剖析青少年親子衝突的內心小劇場"),
+    tags$div(class="card_row card_subtitle",id="aca_subtitle","青少年的親子衝突研究")
+    ),
+    tags$div(
+      class="card_row card_content",id="aca_content",
+      "親子衝突是眾多臺灣家庭的困擾。為人父母，你曾經覺得「都是為了孩子好」，最後卻不歡而散嗎？身為青少年，又是否會因為害怕「不孝」的壓力，與爸媽爭執時選擇消極逃避，從未好好訴說自己的想法..."),
+    tags$img(
+      class="card_pic1 box_shadow",
+      src="https://research.sinica.edu.tw/wp-content/uploads/2021/05/yeh-kuang-hui-01.jpeg"),
+    tags$div( 
+      class="row card_pic1 time_author",
+      tags$div(
+        class="col", #怎麼讓padding left變成0
+        "2021-03-16"),
+      tags$div(
+        class="col",
+        tags$div("採訪撰文｜吳易珊、劉芝吟"),
+        tags$div("美術設計｜林洵安")
+      )
+    )
+  )
+  
+)
+}
+```
+
+## slider
+
+```{r slider}
+slider <- 
+  tags$div(class="carousel carousel-slider center", 
+    slider_singleton(
+      tags$img(class="responsive-img",
+        src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg"
+      )
+    ),
+    slider_singleton(academia1)
+  )  %>%
+  tagList(
+    tags$script(
+      "$slider = $('.carousel.carousel-slider')
+      $slider.carousel({
+    fullWidth: true,
+    indicators: true
+  });
+      $instance = M.Carousel.getInstance($slider);"
+    )
+  )
+```
+
+```{r layout}
+layout <- 
+  withTags(
+    div(class="row",
+      div(class="col s7"),
+      div(class="col s5", slider))
+  )
+```
+
+
+## JS
+
+
+<!--JS end-->
