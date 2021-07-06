@@ -1,0 +1,28 @@
+body {
+  font-family: "Noto Serif TC", sans-serif;
+}
+
+.less5mins {
+  color: red;
+}
+
+.between5and10 {
+  color: #ef6c00;
+}
+
+.more10mins {
+  color: green;
+}
+
+.carousel {
+min-height: 600px;
+}
+
+.carousel .carousel-item{
+width: 400px;
+height: 100%;
+}
+
+.temp3 {
+  
+}
