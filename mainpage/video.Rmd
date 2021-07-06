@@ -1,0 +1,57 @@
+---
+drake_cache: '.video'
+dependencies: 'dependencies'
+output:
+  html_tag:
+    filename: "video.html"
+    dirpath: "`r library(econR); . %//% 'docs'`"
+    object: "video"
+---
+
+```{r, drake=F}
+library(econR)
+rstudioapi::initializeProject(. %//% 'your_foldername') # to create .Rproj
+```
+
+
+```{r makecondition}
+library(econR)
+library(htmltools)
+dependencyTemplate <- readRDS(
+  . %//% "dependencies.Rds"
+)
+```
+
+
+```{r dependencies}
+dependencies <- dependencyTemplate
+```
+
+```{r}
+drake$loadTarget$video()
+saveRDS(video, file=. %//% "video.Rds")
+```
+
+```{r video, drake=T}
+video <- withTags({
+  video <- tags$div(class="video-container",
+    tags$iframe(width="560", height="315", src="https://www.youtube-nocookie.com/embed/z7GFa9Idi-M", title="YouTube video player", frameborder="0", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen="")
+    )
+  div(class="card",
+    div(class="card-content",
+    video))
+})
+
+```
+
+```{r video, drake=F}
+video <- tags$video(class="responsive-video",
+    tags$source(src="https://youtu.be/z7GFa9Idi-M")
+    )
+```
+
+
+## JS
+
+
+<!--JS end-->

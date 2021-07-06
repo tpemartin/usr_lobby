@@ -10,7 +10,7 @@ output:
 
 ```{r, drake=F}
 library(econR)
-rstudioapi::initializeProject(. %//% 'your_foldername') # to create .Rproj
+rstudioapi::initializeProject(. %//% 'mainpage') # to create .Rproj
 ```
 
 
@@ -20,6 +20,14 @@ library(htmltools)
 dependencyTemplate <- readRDS(
   . %//% "dependencies.Rds"
 )
+source(. %//% "r/lobby.R")
+```
+
+## Read Rds
+
+```{r makecondition_rdsRead, drake=T}
+slider <- readRDS(. %//% "slider.Rds")
+# video <- readRDS(. %//% "video.Rds")
 ```
 
 
@@ -34,25 +42,43 @@ dependencies <- dependencyTemplate
 ```{r layoutFun}
 layoutFun <- function(video, lifeInfo, slider){
   div(class="row",
-    div(class="col s7 purple", 
-      div(class="purple", style="height: 500px",
+    div(class="col s7 valign-wrapper", 
+      div(class="valign-wrapper", style="height: 500px",
         video),
       div(class="white",style="height: 300px",
         lifeInfo)
       ),
-    div(class="col s5 amber", style="height: 800px;",
+    div(class="col s5", style="height: 800px;",
       slider)
   )
 }
 ```
 
-```{r layout}
-layout <- layoutFun(
-  tagList(), tagList(), tagList())
+```{r layout, drake=F}
+layout <- layoutFun(tagList(), tagList(), tagList())
+```
+
+```{r video, drake=T}
+video <- withTags({
+  video <- tags$div(id="video", class= "card valign-wrapper",
+   style="min-width: 600px; min-height: 400px; ",
+    tags$iframe(width="560", height="315", src="https://www.youtube.com/embed/z7GFa9Idi-M?rel=0",
+      frameborder="0", allowfullscreen="")
+  )
+ video 
+})
+
+```
+
+```{r layout, drake=T}
+layout <- {
+  layoutFun(
+  video, tagList(), slider)
+}
 ```
 
 ```{r save_result}
-saveRDS(layoutFun, file=. %//% "layout.Rds")
+saveRDS(layoutFun, file=. %//% "layoutFun.Rds")
 ```
 
 

@@ -29,7 +29,7 @@ dependencies <- {
   myDependencies <- htmltools::htmlDependency(
     name="myown",
     version="1.0.0",
-    src = c(file= . %//% "mainpage/assets"),
+    src = c(file= . %//% "assets"),
     script = "js/myscript.js",
     stylesheet = c("css/mystyle.css")
     )
@@ -37,7 +37,7 @@ dependencies <- {
   timDependencies <- htmltools::htmlDependency(
     name="tim",
     version="1.0.0",
-    src=c(file=. %//% 'slider_test/assets'),
+    src=c(file= '/Users/martinl/Github/usr_lobby/slider_test/assets'),
     stylesheet = c("css/mystyle.css"),
     script = c('js/mydesign.js')
   )

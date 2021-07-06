@@ -21,7 +21,7 @@ dependencyTemplate <- readRDS(
   . %//% "dependencies.Rds"
 )
 layoutFun <- readRDS(
-  . %//% "layout.Rds"
+  . %//% "layoutFun.Rds"
 )
 ```
 
@@ -32,19 +32,37 @@ dependencies <- dependencyTemplate
 
 ## slider
 
+```{r}
+drake$loadTarget$slider()
+saveRDS(slider, file="slider.Rds")
+```
+
+```{r card}
+card <- function(x){div(class="card", id="sliders", x)}
+```
+
 
 ```{r slider}
+slider <- {
+    sliderFun(Academia_card,
+            slider_content1,
+            slider_content2)  %>% card(id="sliders")
+}
+  
+  
+```
 
-slider <- tagList(
+```{r sliderFun}
+sliderFun <- function(...){
+tagList(
       tags$div(class="slideshow-container",  
          tags$div(class="slider-inner-container", 
-            Academia_card,
-            slider_content1,
-            slider_content2
+            ...
          ),
          controls
       )
 )
+} 
 
 ```
 
@@ -96,7 +114,7 @@ slider_content1 <- tagList(
 
 ```
 
-```{r slider_content1,drake=T}
+```{r posterFun,drake=T}
 
 posterFun <- function(){
   tagList(

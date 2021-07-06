@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 let index = 0;
 function autoPlay(){
   nextSlide();
-  updateDotIndicator();
+  //updateDotIndicator();
 }
 function nextSlide(){
   if (index == slides.length - 1) {
