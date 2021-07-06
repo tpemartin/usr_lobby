@@ -5,6 +5,9 @@
 # Session Data files
 .RData
 
+/Users/martinl/Github/usr_lobby/shiny*
+
+
 # Example code in package build process
 *-Ex.R
 
@@ -38,3 +41,8 @@ UI/.carousel/**
 # drake cache starting with .
 **/\.*
 docs/lib/myown-1.0/lifeInfo.Rmd
+shiny**/
+web**/
+www/**
+Untitled**/
+**/docs**/
