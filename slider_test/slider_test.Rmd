@@ -238,6 +238,8 @@ headTags <- {
 
 ### Define dependency
 
+
+
 ```{r myDependency}
 myDependency <- htmltools::htmlDependency(
   name="myown",

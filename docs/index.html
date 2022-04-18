@@ -3,123 +3,50 @@
 <head>
 <meta charset="utf-8"/>
 <style>body{background-color:white;}</style>
-<link href="lib/myown-1.0/css/mystyle.css" rel="stylesheet" />
-<script src="lib/myown-1.0/js/mydesign.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.2.0/sha.min.js"></script>
+<script src="lib/jquery-3.5.1/jquery.min.js"></script>
+<link href="lib/myown-1.0/css/mystyle.css" rel="stylesheet" />
+<script src="lib/myown-1.0/js/mydesign.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC">
+
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<html>
-  <body>
-    <div>
-      <div class="row">
-        <div class="col s8 relative">
-          <div class="absolute">
-            <div class="video-container">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/z7GFa9Idi-M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="valign-wrapper" id="route932_1">
-                <a class="" id="route932_2">
-                  <i class="material-icons"> directions_bus</i>
-                </a>
-                932
-              </div>
-              <div class="valign-wrapper " id="route916-1">
-                <a class="" id="route916-2">
-                  <i class="material-icons"> directions_bus</i>
-                </a>
-                916
-              </div>
-              <div class="valign-wrapper" id="route939-1">
-                <a class="" id="route939-2">
-                  <i class="material-icons "> directions_bus</i>
-                </a>
-                939
-              </div>
-              <div class="valign-wrapper" id="route941-1">
-                <a class="" id="route941-2">
-                  <i class="material-icons"> directions_bus</i>
-                </a>
-                941
-              </div>
-            </div>
-          </div>
+<body>
+  <div class="slideshow-container">
+    <div class="slider-inner-container">
+      <div class="mySlides active fade academia_border">
+        <img class="card_row card_pic" src="https://research.sinica.edu.tw/wp-content/uploads/2020/11/logo.png"/>
+        <div class="card_title_subtitle">
+          <div class="card_row card_title" id="aca_title">和爸媽吵架是不孝嗎？心理學家剖析青少年親子衝突的內心小劇場</div>
+          <div class="card_row card_subtitle" id="aca_subtitle">青少年的親子衝突研究</div>
         </div>
-        <div class="col s4">
-          <div class="slideshow-container">
-            <div class="slider-inner-container">
-              <div class="mySlides active fade academia_border">
-                <img class="card_row  card_pic" src="https://research.sinica.edu.tw/wp-content/uploads/2020/11/logo.png"/>
-                <div class="card_title_subtitle">
-                  <div class="card_row card_title" id="aca_title">和爸媽吵架是不孝嗎？心理學家剖析青少年親子衝突的內心小劇場</div>
-                  <div class="card_row card_subtitle" id="aca_subtitle">青少年的親子衝突研究</div>
-                </div>
-                <div class="card_row card_content" id="aca_content">親子衝突是眾多臺灣家庭的困擾。為人父母，你曾經覺得「都是為了孩子好」，最後卻不歡而散嗎？身為青少年，又是否會因為害怕「不孝」的壓力，與爸媽爭執時選擇消極逃避，從未好好訴說自己的想法...</div>
-                <img class="card_pic1 box_shadow" src="https://research.sinica.edu.tw/wp-content/uploads/2021/05/yeh-kuang-hui-01.jpeg"/>
-                <div class="row card_pic1 time_author">
-                  <div class="col">2021-03-16</div>
-                  <div class="col">
-                    <div>採訪撰文｜吳易珊、劉芝吟</div>
-                    <div>美術設計｜林洵安</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mySlides fade">
-                <img src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg" style="width:100%"/>
-              </div>
-              <div class="mySlides fade">
-                <img src="https://i.imgur.com/KDFRc36.jpg" style="width:100%"/>
-              </div>
-            </div>
-            <div class="controls">
-              <div class="prev">
-                <i class="small material-icons">arrow_back</i>
-              </div>
-              <div class="next">
-                <i class="small material-icons">arrow_forward</i>
-              </div>
-            </div>
+        <div class="card_row card_content" id="aca_content">親子衝突是眾多臺灣家庭的困擾。為人父母，你曾經覺得「都是為了孩子好」，最後卻不歡而散嗎？身為青少年，又是否會因為害怕「不孝」的壓力，與爸媽爭執時選擇消極逃避，從未好好訴說自己的想法...</div>
+        <img class="card_pic1 box_shadow" src="https://research.sinica.edu.tw/wp-content/uploads/2021/05/yeh-kuang-hui-01.jpeg"/>
+        <div class="row card_pic1 time_author">
+          <div class="col">2021-03-16</div>
+          <div class="col">
+            <div>採訪撰文｜吳易珊、劉芝吟</div>
+            <div>美術設計｜林洵安</div>
           </div>
-        </div>
-        <div class="fixed-action-btn">
-          <a class="btn-floating btn-large red">
-            <i class="large material-icons"> mode_edit</i>
-          </a>
-          <ul>
-            <li>
-              <a class="btn-floating red">
-                <i class="material-icons"> insert_chart</i>
-              </a>
-            </li>
-            <li>
-              <a class="btn-floating yellow darken-1">
-                <i class="material-icons"> format_quote</i>
-              </a>
-            </li>
-            <li>
-              <a class="btn-floating green">
-                <i class="material-icons"> publish</i>
-              </a>
-            </li>
-            <li>
-              <a class="btn-floating blue">
-                <i class="material-icons"> attach_file</i>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
+      <div class="mySlides fade">
+        <img src="https://i.imgur.com/KDFRc36.jpg" style="width:100%"/>
+      </div>
+      <div class="mySlides fade">
+        <img src="https://cms.carrier.ntpu.edu.tw/uploads/1533_fccf71649d.jpeg" style="width:100%"/>
+      </div>
     </div>
-  </body>
-</html>
+    <div class="prev">
+      <i class="small material-icons">arrow_back</i>
+    </div>
+    <div class="next">
+      <i class="small material-icons">arrow_forward</i>
+    </div>
+  </div>
+</body>
 </html>
